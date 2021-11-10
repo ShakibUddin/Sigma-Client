@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const WatchCard = (props) => {
     const { _id, name, description, price, image } = props.data;
+    const showButton = props.showButton;
     return (
         <div className="w-full shadow-md p-4 flex flex-col justify-between bg-white">
             <div className="lg:w-4/12 w-5/12 h-52 mx-auto">
@@ -11,9 +13,11 @@ const WatchCard = (props) => {
                 <p className="text-xl text-black font-semibold my-2">{name}</p>
                 <p className="text-sm text-gray-400 my-2">{description}</p>
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-col items-center">
                 <p className="text-2xl text-yellow-500 font-bold my-2">${price}</p>
-                <button className="w-1/3 py-2 bg-yellow-500 text-white text-center mx-auto">Buy</button>
+                {showButton && <Link className="w-3/5 py-2 px-4 bg-yellow-500" to={`/purchase/${_id}`}>
+                    <button className=" w-full  text-white">Buy</button>
+                </Link>}
             </div>
         </div>
     );

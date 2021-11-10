@@ -28,7 +28,8 @@ const useFirebase = () => {
                     name: displayName,
                     email: email,
                     photo: photoURL,
-                    emailVerified: emailVerified
+                    emailVerified: emailVerified,
+                    status: "USER"
                 };
                 setSigninError("");
                 saveUserInDB(loggedInUser);
@@ -47,7 +48,8 @@ const useFirebase = () => {
                     name: displayName,
                     email: email,
                     photo: photoURL,
-                    emailVerified: emailVerified
+                    emailVerified: emailVerified,
+                    status: "USER"
                 };
                 setSigninError("");
                 saveUserInDB(loggedInUser);
@@ -85,7 +87,8 @@ const useFirebase = () => {
                         name: user.displayName,
                         email: user.email,
                         photo: user.photoURL,
-                        emailVerified: user.emailVerified
+                        emailVerified: user.emailVerified,
+                        status: "USER"
                     };
                     setUser(loggedInUser);
                     saveUserInDB(loggedInUser);
@@ -105,7 +108,8 @@ const useFirebase = () => {
                     name: displayName,
                     email: email,
                     photo: photoURL,
-                    emailVerified: emailVerified
+                    emailVerified: emailVerified,
+                    status: user.status
                 };
                 setUser(loggedInUser);
             } else {

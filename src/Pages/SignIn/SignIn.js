@@ -75,18 +75,6 @@ const SignIn = () => {
                         redirectUserAfterSignIn();
                     })
                 }}><FontAwesomeIcon icon={faGithub} /></button>
-                <button className="px-4 p-2 text-xl border-2 text-white bg-yellow-600" onClick={(e) => {
-                    e.preventDefault();
-                    handleFirebaseEmailSignIn("admin@gmail.com", "admin123").then(() => {
-                        redirectUserAfterSignIn();
-                    });
-                }}>Admin</button>
-                <button className="px-4 p-2 text-xl border-2 text-white bg-yellow-600" onClick={(e) => {
-                    e.preventDefault();
-                    handleFirebaseEmailSignIn("user@gmail.com", "useR1234").then(() => {
-                        redirectUserAfterSignIn();
-                    });
-                }}>User</button>
             </div>
         </form>
     );

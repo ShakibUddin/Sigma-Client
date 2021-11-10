@@ -27,7 +27,7 @@ const NavBar = () => {
                                 <div className="relative flex items-center justify-between h-16">
                                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                         {/* Mobile menu button*/}
-                                        <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                                        <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                                             <span className="sr-only">Open main menu</span>
                                             {open ? (
                                                 <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -51,7 +51,7 @@ const NavBar = () => {
                                                         key={item.name}
                                                         to={item.to}
                                                         className={classNames(
-                                                            'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                            'text-gray-300 hover:bg-yellow-600 hover:text-white',
                                                             'px-3 py-2 rounded-md text-sm font-medium'
                                                         )}
                                                     >
@@ -65,7 +65,7 @@ const NavBar = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col items-center w-full   lg:w-1/6">
+                            <div className="flex lg:flex-row md:flex-row flex-col items-center w-full lg:w-2/6 lg:justify-end lg:mr-2">
                                 <p className="text-white p-2">{user.name ? user.name : user.displayName}</p>
                                 {!user.email ? <Link className="w-20 bg-yellow-500 p-2 rounded-md font-semibold uppercase text-center text-white" to="/signin">Join</Link> : <Link className="p-2 font-semibold text-white bg-yellow-500 uppercase" onClick={logout} to="/home">Logout</Link>}
                             </div>
@@ -77,7 +77,7 @@ const NavBar = () => {
                                         key={item.name}
                                         to={item.to}
                                         className={classNames(
-                                            'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                            'text-gray-300 hover:bg-yellow-600 hover:text-white',
                                             'block px-3 py-2 rounded-md text-base font-medium'
                                         )}
                                     >
