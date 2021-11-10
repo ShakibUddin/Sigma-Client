@@ -14,8 +14,8 @@ const WatchCard = (props) => {
                 <p className="text-sm text-gray-400 my-2">{description}</p>
             </div>
             <div className="w-full flex flex-col items-center">
-                <p className="text-2xl text-yellow-500 font-bold my-2">${price}</p>
-                {showButton && <Link className="w-3/5 py-2 px-4 bg-yellow-500" to={`/purchase/${_id}`}>
+                <p className="text-2xl text-green-500 font-bold my-2">${price}</p>
+                {showButton && <Link className="w-3/5 py-2 px-4 bg-green-500" to={`/purchase/${_id}`}>
                     <button className=" w-full  text-white">Buy</button>
                 </Link>}
             </div>

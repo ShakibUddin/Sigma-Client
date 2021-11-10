@@ -49,7 +49,7 @@ const SignIn = () => {
     return (
         <form className="lg:w-6/12 w-11/12 mx-auto p-5 m-5 flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
             <p className="text-4xl py-10 font-extrabold">SignIn</p>
-            {alert && <p className="p-3 text-center bg-yellow-400 text-black">{alert}</p>}
+            {alert && <p className="p-3 text-center bg-green-400 text-black">{alert}</p>}
 
             <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Email" {...register("email")} />
             {errors.email && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.email?.message}</p>}
@@ -57,10 +57,10 @@ const SignIn = () => {
             <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="password" placeholder="Enter Password" {...register("password")} />
             {errors.password && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.password?.message}</p>}
 
-            <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-yellow-600 rounded-md text-white cursor-pointer" type="submit" name="LOGIN" />
+            <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-green-600 rounded-md text-white cursor-pointer" type="submit" name="LOGIN" />
             {signinError && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{signinError}</p>}
 
-            <p className="p-5 text-center">Don't have an account? <Link className="text-yellow-800" to='/signup'>Register</Link></p>
+            <p className="p-5 text-center">Don't have an account? <Link className="text-green-800" to='/signup'>Register</Link></p>
 
             <p className="p-3">or</p>
 

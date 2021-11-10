@@ -2,7 +2,7 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 
 const ReviewCard = (props) => {
-    const { user, rating, content } = props.data;
+    const { user, rating, description } = props.data;
     return (
         <div className="w-full shadow-md p-4 flex flex-col justify-between">
             <p className="text-xl text-black text-center font-semibold my-2">{user}</p>
@@ -17,7 +17,7 @@ const ReviewCard = (props) => {
                 />
             </div>
 
-            <p className="text-sm text-gray-400 my-4 text-center">{content}</p>
+            <p className="text-sm text-gray-400 my-4 text-center">{description}</p>
         </div>
     );
 };

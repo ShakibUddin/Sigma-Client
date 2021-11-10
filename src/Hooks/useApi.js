@@ -9,6 +9,7 @@ let useApi = () => {
     const [reviews, setReviews] = useState([]);
     const [purchases, setPurchases] = useState([]);
     const [purchaseSaved, setPurchaseSaved] = useState(false);
+    const [reviewSaved, setReviewSaved] = useState(false);
 
 
     const getWatchesUrl = `${serverUrl}/watches`;
@@ -67,11 +68,12 @@ let useApi = () => {
     useEffect(() => {
         fetchReviews();
     }, []);
-    const saveReviews = ({ user, rating, content }) => {
-        axios.post(saveReviewUrl, { user, rating, content })
+    const saveReview = ({ user, rating, description }) => {
+        axios.post(saveReviewUrl, { user, rating, description })
             .then(response => {
                 if (response.data) {
-
+                    setReviewSaved(true);
+                    fetchReviews();
                     Swal.fire({
                         icon: 'success',
                         title: 'Thank You.',
@@ -81,6 +83,7 @@ let useApi = () => {
                     })
                 }
                 else {
+                    setReviewSaved(false);
                     Swal.showValidationMessage(
                         `Oops! Something is wrong.`
                     )
@@ -89,6 +92,7 @@ let useApi = () => {
 
             })
             .catch(error => {
+                setReviewSaved(false);
                 Swal.showValidationMessage(
                     `Oops! Something is wrong.`
                 )
@@ -177,7 +181,7 @@ let useApi = () => {
     }
 
 
-    return { fetchWatches, watches, saveWatch, fetchReviews, reviews, saveReviews, fetchPurchases, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase };
+    return { fetchWatches, watches, saveWatch, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase };
 }
 
 export default useApi;

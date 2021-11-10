@@ -62,9 +62,9 @@ const PurchaseDataTable = () => {
 
     </div>);
     return (
-        <div className="w-full bg-white mx-auto mb-auto grid lg:grid-cols-3 gap-2 md:grid-cols-2 grid-cols-1 p-3">
+        <div className="bg-white mb-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-2">
             {
-                myPurchases.map(purchase => <div key={purchase._id} className="flex flex-col justify-between p-2 shadow-md">
+                myPurchases.map(purchase => <div key={purchase._id} className="w-full flex flex-col justify-between p-2 shadow-md">
                     <div>
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Watch: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.watch}</span></p>
 
