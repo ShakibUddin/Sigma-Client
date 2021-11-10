@@ -17,6 +17,8 @@ let useApi = () => {
     const saveReviewUrl = `${serverUrl}/review`;
     const getPurchasesUrl = `${serverUrl}/purchases`;
     const savePurchaseUrl = `${serverUrl}/purchase`;
+    const deletePurchaseUrl = `${serverUrl}/delete/purchase`;//add id
+    const approvePurchaseUrl = `${serverUrl}/update/purchase`;//add id
 
     //----------------------Watches Get,Post Code------------------
     const fetchWatches = () => {
@@ -103,8 +105,8 @@ let useApi = () => {
     useEffect(() => {
         fetchPurchases();
     }, []);
-    const savePurchase = ({ user, email, mobile, address, watchId, price }) => {
-        axios.post(savePurchaseUrl, { user, email, mobile, address, watchId, price })
+    const savePurchase = ({ user, email, mobile, address, watchId, watch, date, price, status }) => {
+        axios.post(savePurchaseUrl, { user, email, mobile, address, watchId, watch, date, price, status })
             .then(response => {
                 if (response.data) {
                     setPurchaseSaved(true);
@@ -132,7 +134,50 @@ let useApi = () => {
                 )
             })
     }
-    return { fetchWatches, watches, saveWatch, fetchReviews, reviews, saveReviews, fetchPurchases, purchases, savePurchase, purchaseSaved, setPurchaseSaved };
+    const deletePurchase = (id) => {
+        axios.delete(`${deletePurchaseUrl}/${id}`)
+            .then(function (response) {
+                if (response.data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Purchase deleted successfully.',
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    })
+                    //fetch new data
+                    fetchPurchases();
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    const approvePurchase = ({ _id, user, email, mobile, address, watchId, watch, date, price, status }) => {
+        axios.put(approvePurchaseUrl, { user, email, mobile, address, watchId, watch, date, price, status })
+            .then(response => {
+                if (response.data) {
+                    deletePurchase(_id);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Purchase approved successfully',
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    })
+                }
+                else {
+                    throw new Error(response.statusText);
+                }
+
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Oops! Something is wrong.`
+                )
+            })
+    }
+
+
+    return { fetchWatches, watches, saveWatch, fetchReviews, reviews, saveReviews, fetchPurchases, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase };
 }
 
 export default useApi;

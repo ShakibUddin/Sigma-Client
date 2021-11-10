@@ -1,20 +1,19 @@
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCreditCard, faEdit, faShoppingCart, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Switch } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
-import { Menu, MenuItem, ProSidebar, SidebarHeader } from 'react-pro-sidebar';
-import 'react-pro-sidebar/dist/css/styles.css';
 import { Route, useRouteMatch } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import DashboardSection from './DashboardSection/DashboardSection';
 
 const Dashboard = () => {
     const [collapse, setCollapse] = useState(false);
-    const { height, width } = useWindowDimensions();
+    const [selectedMenu, setSelectedMenu] = useState("");
+    const menus = [{ name: "Pay", icon: faCreditCard }, { name: "Orders", icon: faShoppingCart }, { name: "Review", icon: faEdit }, { name: "Logout", icon: faSignOutAlt }];
+    const { width } = useWindowDimensions();
     let { path, url } = useRouteMatch();
     useEffect(() => {
-        if (width < 800) {
+        if (width < 768) {
             setCollapse(true);
         }
         else {
@@ -24,23 +23,39 @@ const Dashboard = () => {
     const handleSideBarToggle = () => {
         setCollapse(!collapse);
     }
+    const handleMenuClick = (e) => {
+        setSelectedMenu(e.target.innerText);
+    }
     return (
-        <div className="flex">
-            <ProSidebar collapsedWidth={"50px"} width={"150px"} collapsed={collapse} className="bg-yellow-500 h-96">
-                <SidebarHeader>
-                    <FontAwesomeIcon className="m-5 cursor-pointer" onClick={handleSideBarToggle} icon={faBars} />
-                </SidebarHeader>
-                <Menu popperArrow={true} iconShape="square">
-                    <MenuItem><Link to={`${url}/pay`}>Pay</Link></MenuItem>
-                    <MenuItem><Link to={`${url}/orders`}>My Orders</Link></MenuItem>
-                    <MenuItem><Link to={`${url}/review`}>Review</Link></MenuItem>
-                    <MenuItem><Link to={`${url}/logout`}>Logout</Link></MenuItem>
-                </Menu>
-            </ProSidebar>
+        <div className="w-full flex select-none">
+            <div style={{ width: `${collapse ? "50px" : "150px"}`, height: "100vh" }} className="flex flex-col justify-start bg-yellow-400 pl-3 py-3">
+                <FontAwesomeIcon className="text-black font-bold text-xl mb-3 cursor-pointer" icon={faBars} onClick={handleSideBarToggle} />
+                {
+                    !collapse && <div>
+                        {
+                            menus.map((menu, index) => {
+                                return <Link key={index} to={`${url}/${menu.name.toLocaleLowerCase()}`}>
+                                    <p
+                                        onClick={(e) => { handleMenuClick(e) }}
+                                        className={
+                                            `${menu.name.trim() === selectedMenu.trim() ?
+                                                "bg-white my-2 py-2 pl-2 text-xl text-yellow-500 select-none"
+                                                :
+                                                "my-2 py-2 pl-2 text-xl select-none"
+                                            }`
+                                        }>
+                                        <FontAwesomeIcon icon={menu.icon} /> {menu.name}
+                                    </p>
+                                </Link>
+                            })
+                        }
+                    </div>
+                }
+            </div>
 
             <Switch>
-                <Route exact path={`${path}/:sectionId`}>
-                    <DashboardSection></DashboardSection>
+                <Route path={`${path}/:sectionId`}>
+                    <DashboardSection />
                 </Route>
             </Switch>
         </div >

@@ -33,7 +33,7 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        savePurchase({ user: data.name, email: data.email, mobile: data.mobile, address: data.address, watchId: selectedWatch._id, price: selectedWatch.price });
+        savePurchase({ user: data.name, email: data.email, mobile: data.mobile, address: data.address, watchId: selectedWatch._id, watch: selectedWatch.name, price: selectedWatch.price, date: new Date().toDateString(), status: "Pending" });
     };
 
     useEffect(() => {

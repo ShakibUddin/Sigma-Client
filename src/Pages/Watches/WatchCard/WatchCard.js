@@ -6,7 +6,7 @@ const WatchCard = (props) => {
     const showButton = props.showButton;
     return (
         <div className="w-full shadow-md p-4 flex flex-col justify-between bg-white">
-            <div className="lg:w-4/12 w-5/12 h-52 mx-auto">
+            <div className="w-4/12 h-52 mx-auto">
                 <img className="w-full h-full" src={image} alt="" />
             </div>
             <div className="w-full">
