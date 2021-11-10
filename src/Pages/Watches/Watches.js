@@ -10,7 +10,7 @@ const Watches = (props) => {
         if (limit) setWatchesForHomePage(watches.slice(0, limit));
     }, [limit, watches])
     return (
-        <div className="w-full place-content-center grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-4 p-4">
+        <div className="lg:w-11/12 md:w-11/12 w-full mx-auto place-content-center grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-4 p-4">
             {
                 limit ?
                     watchesForHomePage.map(watch => <WatchCard key={watch._id} data={watch}></WatchCard>) :
