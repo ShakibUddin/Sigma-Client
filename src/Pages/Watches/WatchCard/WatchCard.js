@@ -3,7 +3,7 @@ import React from 'react';
 const WatchCard = (props) => {
     const { _id, name, description, price, image } = props.data;
     return (
-        <div className="w-full shadow-md p-4 flex flex-col justify-between">
+        <div className="w-full shadow-md p-4 flex flex-col justify-between bg-white">
             <div className="lg:w-4/12 w-5/12 h-52 mx-auto">
                 <img className="w-full h-full" src={image} alt="" />
             </div>
