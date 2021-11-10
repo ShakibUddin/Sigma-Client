@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch as RouteSwitch } from 'react-router-dom';
 import AuthProvider from '../../../Contexts/AuthProvider';
 import DataProvider from '../../../Contexts/DataProvider';
+import Dashboard from '../../Dashboard/Dashboard';
 import Home from "../../Home/Home";
 import NotFound from "../../NotFound/NotFound";
 import Payment from '../../Payment/Payment';
@@ -24,6 +25,7 @@ const Navigation = () => {
                         <Route exact path="/"><Home></Home></Route>
                         <Route exact path="/home"><Home></Home></Route>
                         <Route exact path="/watches"><Watches></Watches></Route>
+                        <PrivateRoute path="/dashboard"><Dashboard></Dashboard></PrivateRoute>
                         <PrivateRoute exact path="/purchase/:watchId"><Purchase></Purchase></PrivateRoute>
                         <PrivateRoute exact path="/payment/:watchId"><Payment></Payment></PrivateRoute>
                         <Route exact path="/signin"><SignIn></SignIn></Route>
