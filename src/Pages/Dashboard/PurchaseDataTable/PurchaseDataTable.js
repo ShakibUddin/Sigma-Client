@@ -19,7 +19,7 @@ const PurchaseDataTable = () => {
     const handleApproveClick = (purchase) => {
         Swal.fire({
             title: 'Are you sure?',
-            text: `Approve ${purchase.user}'s ${purchase.watch} order?`,
+            text: `Approve ${purchase.user}'s ${purchase.product} order?`,
             inputAttributes: {
                 autocapitalize: 'off'
             },
@@ -37,7 +37,7 @@ const PurchaseDataTable = () => {
     function openModal(purchase) {
         Swal.fire({
             title: 'Are you sure?',
-            text: `You want to delete ${purchase.user}'s ${purchase.watch} order?`,
+            text: `You want to delete ${purchase.user}'s ${purchase.product} order?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -66,7 +66,7 @@ const PurchaseDataTable = () => {
             {
                 myPurchases.map(purchase => <div key={purchase._id} className="w-full flex flex-col justify-between p-2 shadow-md">
                     <div>
-                        <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Watch: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.watch}</span></p>
+                        <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Product: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.product}</span></p>
 
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Price: <span className="text-gray-600 text-xs text-left py-3 ">${purchase.price}</span></p>
 
@@ -81,7 +81,7 @@ const PurchaseDataTable = () => {
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Date: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.date}</span></p>
                     </div>
                     <div className="flex justify-center">
-                        {user.status === "ADMIN" && <button className="w-2/4 mx-1 p-2 bg-blue-500 text-white" onClick={() => {
+                        {user.role === "ADMIN" && <button className="w-2/4 mx-1 p-2 bg-blue-500 text-white" onClick={() => {
                             handleApproveClick(purchase);
                         }}
                         >Approve</button>}

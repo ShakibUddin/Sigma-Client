@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const WatchCard = (props) => {
+const ProductCard = (props) => {
     const { _id, name, description, price, image } = props.data;
     const showButton = props.showButton;
     return (
@@ -23,4 +23,4 @@ const WatchCard = (props) => {
     );
 };
 
-export default WatchCard;
+export default ProductCard;

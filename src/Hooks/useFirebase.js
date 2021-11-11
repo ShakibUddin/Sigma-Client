@@ -12,12 +12,21 @@ const useFirebase = () => {
     const gitHubProvider = new GithubAuthProvider();
     const [signupError, setSignupError] = useState("");
     const [signinError, setSigninError] = useState("");
+    const [role, setRole] = useState("");
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const upsertUserUrl = `${serverUrl}/user`;
+    const getUserRoleUrl = `${serverUrl}/user/role`;//add email 
 
     const saveUserInDB = (user) => {
         axios.put(upsertUserUrl, { ...user });
+    }
+    const getUserRole = (email) => {
+        axios.get(`${getUserRoleUrl}/${email}`).then(response => {
+            if (response.status === 200) {
+                setRole(response.data);
+            }
+        });
     }
 
     const handleGoogleSignIn = () => {
@@ -29,7 +38,7 @@ const useFirebase = () => {
                     email: email,
                     photo: photoURL,
                     emailVerified: emailVerified,
-                    status: "USER"
+                    role: "USER"
                 };
                 setSigninError("");
                 saveUserInDB(loggedInUser);
@@ -49,7 +58,7 @@ const useFirebase = () => {
                     email: email,
                     photo: photoURL,
                     emailVerified: emailVerified,
-                    status: "USER"
+                    role: "USER"
                 };
                 setSigninError("");
                 saveUserInDB(loggedInUser);
@@ -66,7 +75,14 @@ const useFirebase = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                setUser(user);
+                const { displayName, email, photoURL, emailVerified } = user;
+                const loggedInUser = {
+                    name: displayName,
+                    email: email,
+                    photo: photoURL,
+                    emailVerified: emailVerified,
+                };
+                setUser(loggedInUser);
                 setSigninError("");
             })
             .catch((error) => {
@@ -88,7 +104,7 @@ const useFirebase = () => {
                         email: user.email,
                         photo: user.photoURL,
                         emailVerified: user.emailVerified,
-                        status: "USER"
+                        role: "USER"
                     };
                     setUser(loggedInUser);
                     saveUserInDB(loggedInUser);
@@ -103,17 +119,11 @@ const useFirebase = () => {
     useEffect(() => {
         const unsubscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
-                const { displayName, email, photoURL, emailVerified } = user;
-                const loggedInUser = {
-                    name: displayName,
-                    email: email,
-                    photo: photoURL,
-                    emailVerified: emailVerified,
-                    status: user.status
-                };
-                setUser(loggedInUser);
+                setUser(user);
+                getUserRole(user.email);
             } else {
-                setUser({})
+                setUser({});
+                setRole("");
             }
             setIsLoading(false);
         });
@@ -136,6 +146,7 @@ const useFirebase = () => {
         signupError,
         signinError,
         user,
+        role,
         isLoading,
         logout
     }

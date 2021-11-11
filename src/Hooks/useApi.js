@@ -5,40 +5,40 @@ const axios = require('axios').default;
 
 let useApi = () => {
 
-    const [watches, setWatches] = useState([]);
+    const [products, setProducts] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [purchases, setPurchases] = useState([]);
     const [purchaseSaved, setPurchaseSaved] = useState(false);
     const [reviewSaved, setReviewSaved] = useState(false);
 
 
-    const getWatchesUrl = `${serverUrl}/watches`;
-    const saveWatchesUrl = `${serverUrl}/watch`;
+    const getProductsUrl = `${serverUrl}/products`;
+    const saveProductsUrl = `${serverUrl}/product/add`;
     const getReviewsUrl = `${serverUrl}/reviews`;
-    const saveReviewUrl = `${serverUrl}/review`;
+    const saveReviewUrl = `${serverUrl}/review/add`;
     const getPurchasesUrl = `${serverUrl}/purchases`;
-    const savePurchaseUrl = `${serverUrl}/purchase`;
-    const deletePurchaseUrl = `${serverUrl}/delete/purchase`;//add id
-    const approvePurchaseUrl = `${serverUrl}/update/purchase`;//add id
+    const savePurchaseUrl = `${serverUrl}/purchase/add`;
+    const deletePurchaseUrl = `${serverUrl}/purchase/delete`;//add id
+    const approvePurchaseUrl = `${serverUrl}/purchase/update`;//add id
 
-    //----------------------Watches Get,Post Code------------------
-    const fetchWatches = () => {
-        axios.get(getWatchesUrl)
+    //----------------------Products Get,Post Code------------------
+    const fetchProducts = () => {
+        axios.get(getProductsUrl)
             .then(response => {
-                setWatches(response.data);
+                setProducts(response.data);
             }).catch(e => console.log(e));
     }
     useEffect(() => {
-        fetchWatches();
+        fetchProducts();
     }, []);
-    const saveWatch = ({ name, description, price, image }) => {
-        axios.post(saveWatchesUrl, { name, description, price, image })
+    const saveProduct = ({ name, description, price, image }) => {
+        axios.post(saveProductsUrl, { name, description, price, image })
             .then(response => {
                 if (response.data) {
 
                     Swal.fire({
                         icon: 'success',
-                        title: 'Watch Uploaded Successfully',
+                        title: 'Product Uploaded Successfully',
                         showCloseButton: true,
                         showConfirmButton: false,
                     })
@@ -109,8 +109,8 @@ let useApi = () => {
     useEffect(() => {
         fetchPurchases();
     }, []);
-    const savePurchase = ({ user, email, mobile, address, watchId, watch, date, price, status }) => {
-        axios.post(savePurchaseUrl, { user, email, mobile, address, watchId, watch, date, price, status })
+    const savePurchase = ({ user, email, mobile, address, productId, product, date, price, status }) => {
+        axios.post(savePurchaseUrl, { user, email, mobile, address, productId, product, date, price, status })
             .then(response => {
                 if (response.data) {
                     setPurchaseSaved(true);
@@ -156,8 +156,8 @@ let useApi = () => {
                 console.log(error);
             });
     }
-    const approvePurchase = ({ _id, user, email, mobile, address, watchId, watch, date, price, status }) => {
-        axios.put(approvePurchaseUrl, { user, email, mobile, address, watchId, watch, date, price, status })
+    const approvePurchase = ({ _id, user, email, mobile, address, productId, product, date, price, status }) => {
+        axios.put(approvePurchaseUrl, { user, email, mobile, address, productId, product, date, price, status })
             .then(response => {
                 if (response.data) {
                     deletePurchase(_id);
@@ -181,7 +181,7 @@ let useApi = () => {
     }
 
 
-    return { fetchWatches, watches, saveWatch, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase };
+    return { fetchProducts, products, saveProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase };
 }
 
 export default useApi;

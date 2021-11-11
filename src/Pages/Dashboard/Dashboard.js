@@ -1,4 +1,4 @@
-import { faBars, faCreditCard, faEdit, faShoppingCart, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCreditCard, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Route, useRouteMatch } from 'react-router';
@@ -10,10 +10,21 @@ import DashboardSection from './DashboardSection/DashboardSection';
 const Dashboard = () => {
     const [collapse, setCollapse] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState("");
-    const menus = [{ name: "Pay", icon: faCreditCard }, { name: "Orders", icon: faShoppingCart }, { name: "Review", icon: faEdit }, { name: "Logout", icon: faSignOutAlt }];
-    const { logout } = useAuth();
+    const userMenus = [{ name: "Pay", path: "pay", icon: faCreditCard }, { name: "Orders", path: "orders", icon: faShoppingCart }, { name: "Review", path: "review", icon: faEdit }, { name: "Logout", icon: faSignOutAlt }];
+
+    const adminMenus = [{ name: "Manage Orders", path: "manage_orders", icon: faShoppingCart }, { name: "Manage Products", path: "manage_products", icon: faTasks }, { name: "Add A Product", path: "add_product", icon: faPlusSquare }, { name: "Make Admin", path: "make_admin", icon: faUserShield }, { name: "Logout", icon: faSignOutAlt }];
+
+    const [menus, setMenus] = useState([]);
+    const { logout, role } = useAuth();
     const { width, height } = useWindowDimensions();
     let { path, url } = useRouteMatch();
+
+    //set menu according to user role
+    useEffect(() => {
+        if (role === "ADMIN") setMenus(adminMenus);
+        else if (role === "USER") setMenus(userMenus);
+    }, [role]);
+
     useEffect(() => {
         if (width < 768) {
             setCollapse(true);
@@ -22,6 +33,7 @@ const Dashboard = () => {
             setCollapse(false);
         }
     }, [width]);
+
     const handleSideBarToggle = () => {
         setCollapse(!collapse);
     }
@@ -30,7 +42,7 @@ const Dashboard = () => {
     }
     return (
         <div className="w-full flex select-none">
-            <div style={{ minWidth: `${collapse ? "50px" : "160px"}`, minHeight: height }} className="grid grid-cols-1 place-content-start bg-green-500 pl-3 py-3">
+            <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, minHeight: height }} className="grid grid-cols-1 place-content-start bg-green-500 pl-3 py-3">
                 <FontAwesomeIcon className="text-white font-bold text-xl mb-3 cursor-pointer" icon={faBars} onClick={handleSideBarToggle} />
                 {
                     !collapse && <div>
@@ -39,7 +51,7 @@ const Dashboard = () => {
                                 if (index === menus.length - 1) {
                                     return <button className="my-2 py-2 pl-2 text-xl select-none text-white" key={index} onClick={logout} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</button>;
                                 }
-                                return <Link key={index} to={`${url}/${menu.name.toLocaleLowerCase()}`}>
+                                return <Link key={index} to={`${url}/${menu.path}`}>
                                     <p
                                         onClick={(e) => { handleMenuClick(e) }}
                                         className={

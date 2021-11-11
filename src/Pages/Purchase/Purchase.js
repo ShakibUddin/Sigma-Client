@@ -6,13 +6,13 @@ import { useHistory, useParams } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuth from '../../Hooks/useAuth';
 import useData from '../../Hooks/useData';
-import WatchCard from '../Watches/WatchCard/WatchCard';
+import ProductCard from '../Products/ProductCard/ProductCard';
 
 const SignUp = () => {
-    const { watchId } = useParams();
-    const [selectedWatch, setSelectedWatch] = useState();
+    const { productId } = useParams();
+    const [selectedProduct, setSelectedProduct] = useState();
     const {
-        savePurchase, purchaseSaved, setPurchaseSaved, watches
+        savePurchase, purchaseSaved, setPurchaseSaved, products
     } = useData();
     const { user } = useAuth();
     const history = useHistory();
@@ -33,7 +33,7 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        savePurchase({ user: data.name, email: data.email, mobile: data.mobile, address: data.address, watchId: selectedWatch._id, watch: selectedWatch.name, price: selectedWatch.price, date: new Date().toDateString(), status: "Pending" });
+        savePurchase({ user: data.name, email: data.email, mobile: data.mobile, address: data.address, productId: selectedProduct._id, product: selectedProduct.name, price: selectedProduct.price, date: new Date().toDateString(), status: "Pending" });
     };
 
     useEffect(() => {
@@ -45,11 +45,11 @@ const SignUp = () => {
     }, [history, purchaseSaved, setPurchaseSaved]);
 
     useEffect(() => {
-        //finding user selected watch from watches
-        setSelectedWatch(watches.find(watch => watch._id.toString() === watchId.toString()));
-    }, [watchId, watches]);
+        //finding user selected product from products
+        setSelectedProduct(products.find(product => product._id.toString() === productId.toString()));
+    }, [productId, products]);
 
-    if (!selectedWatch) return (<div className='w-full flex justify-center items-center h-96'>
+    if (!selectedProduct) return (<div className='w-full flex justify-center items-center h-96'>
 
         <Loader
             type="Bars"
@@ -63,7 +63,7 @@ const SignUp = () => {
     return (
         <div className="w-full flex flex-wrap">
             <div style={{ minWidth: "300px" }} className="lg:w-1/3 md:w-2/4 w-full p-3">
-                <WatchCard data={selectedWatch} showButton={false}></WatchCard>
+                <ProductCard data={selectedProduct} showButton={false}></ProductCard>
             </div>
             <form style={{ minWidth: "300px" }} className="lg:w-2/4 md:w-2/4 w-full mx-auto p-3 flex flex-col items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
                 <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" defaultValue={user.name ? user.name : user.displayName} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />

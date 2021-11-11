@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import StarRatings from 'react-star-ratings';
 import * as Yup from 'yup';
-import useAuth from '../../Hooks/useAuth';
-import useData from '../../Hooks/useData';
+import useAuth from '../../../Hooks/useAuth';
+import useData from '../../../Hooks/useData';
 
 const SignUp = () => {
     const [rating, setRating] = useState(1);
@@ -43,7 +43,7 @@ const SignUp = () => {
     return (
         <div className='w-full p-2 flex justify-center'>
             <form className="lg:w-2/4 md:w-2/4 sm:w-3/4 w-10/12 p-2 mx-auto bg-white mb-auto flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-                <input className="w-full p-3 my-2 border-2 rounded-md" defaultValue={user.name ? user.name : user.displayName} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
+                <input className="w-full p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
                 {errors.name && <p className="w-full text-start text-red-600 font-bold">{errors.name?.message}</p>}
 
                 <StarRatings

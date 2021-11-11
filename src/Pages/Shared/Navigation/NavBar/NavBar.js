@@ -6,13 +6,12 @@ import useAuth from '../../../../Hooks/useAuth';
 import logo from '../../../../Images/logo.jpg';
 
 const NavBar = () => {
-    const { user, logout } = useAuth();
-    const navigation = [
-        { name: 'Home', to: '/home' },
-        { name: 'Watches', to: '/watches' },
-        { name: 'Dashboard', to: '/dashboard' },
-    ];
+    const { user, role, logout } = useAuth();
+    const navigation = [];
 
+    if (role !== 'ADMIN') navigation.push({ name: 'Home', to: '/home' });
+    if (role !== 'ADMIN') navigation.push({ name: 'Products', to: '/products' });
+    if (user?.email) navigation.push({ name: 'Dashboard', to: '/dashboard' });
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')

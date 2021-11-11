@@ -19,7 +19,7 @@ const SignIn = () => {
     } = useAuth();
     const location = useLocation();
     const history = useHistory();
-    const redirect_uri = location.state?.from || '/home';
+    const user_redirect_uri = location.state?.from || '/home';
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -39,12 +39,12 @@ const SignIn = () => {
     };
 
     const redirectUserAfterSignIn = () => {
-        history.push(redirect_uri);
+        history.push(user_redirect_uri);
     }
 
     useEffect(() => {
-        if (user.email) history.push(redirect_uri);
-    }, [history, redirect_uri, user.email]);
+        if (user.email) history.push(user_redirect_uri);
+    }, [history, user.email, user_redirect_uri]);
 
     return (
         <form className="lg:w-6/12 w-11/12 mx-auto p-5 m-5 flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
