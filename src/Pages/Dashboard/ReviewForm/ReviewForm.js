@@ -60,7 +60,7 @@ const SignUp = () => {
                 <textarea className="w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Description" {...register("description")} />
                 {errors.description && <p className="w-full text-start text-red-600 font-bold">{errors.description?.message}</p>}
 
-                <input className="w-full mx-auto px-4 p-2 bg-green-500 rounded-md text-white cursor-pointer" type="submit" value="SUBMIT" />
+                <input className="w-full mx-auto px-4 p-2 bg-blue-500 rounded-md text-white cursor-pointer" type="submit" value="SUBMIT" />
             </form>
         </div>
     );

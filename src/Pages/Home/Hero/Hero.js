@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import useAuth from '../../../Hooks/useAuth';
-import heroImage from '../../../Images/watch-1.png';
+import herobg from '../../../Images/mainbg.jpg';
 
 const Hero = () => {
     const history = useHistory();
@@ -10,13 +10,10 @@ const Hero = () => {
         history.push('/products');
     }
     return (
-        <div className="w-full h-screen flex bg-black items-center lg:mb-36">
-            <div className="lg:w-5/12 md:w-5/12  w-full flex flex-col justify-center  lg:items-start md:items-start items-center lg:ml-8 md:ml-8">
-                <p className="lg:text-5xl md:text-3xl text-2xl font-extrabold text-white lg:text-left md:text-left text-center uppercase my-8">Custom Products For Any Occasion</p>
-                {role === "USER" && <button className="w-1/3 bg-black border-2 border-green-500 text-green-500  py-4" onClick={handleExploreClick}>Explore</button>}
-            </div>
-            <div className="lg:w-7/12 md:w-7/12 h-full lg:flex lg:items-center md:flex md:items-center hidden lg:-mb-36">
-                <img className="w-full" src={heroImage} alt="" />
+        <div className="w-full h-screen flex flex-col justify-start lg:items-start md:items-start items-center bg-fixed" style={{ backgroundImage: `url(${herobg})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="lg:w-2/4 md:w-3/5 w-full lg:pl-12 md:pl-10 p-4 md:mt-24 mt-8">
+                <p className="lg:text-5xl md:text-3xl text-2xl font-extrabold text-white uppercase my-8">Custom Products For Any Occasion</p>
+                {role !== "ADMIN" && <button className="w-2/5 bg-transparent border-blue-600 border-2 hover:bg-blue-600 hover:text-white text-white uppercase font-bold py-4" onClick={handleExploreClick}>Explore</button>}
             </div>
         </div>
     );

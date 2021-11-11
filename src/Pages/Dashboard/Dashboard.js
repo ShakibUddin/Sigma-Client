@@ -43,7 +43,7 @@ const Dashboard = () => {
     }
     return (
         <div className="w-full flex select-none">
-            <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, minHeight: height }} className="grid grid-cols-1 place-content-start bg-green-500 pl-3 py-3">
+            <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, minHeight: height }} className="grid grid-cols-1 place-content-start bg-blue-500 pl-3 py-3">
                 <FontAwesomeIcon className="text-white font-bold text-xl mb-3 cursor-pointer" icon={faBars} onClick={handleSideBarToggle} />
                 {
                     !collapse && <div>
@@ -59,7 +59,7 @@ const Dashboard = () => {
                                         onClick={(e) => { handleMenuClick(e) }}
                                         className={
                                             `${menu.name.trim() === selectedMenu.trim() ?
-                                                "bg-white my-2 py-2 pl-2 text-xl text-green-500 select-none"
+                                                "bg-white my-2 py-2 pl-2 text-xl text-blue-500 select-none"
                                                 :
                                                 "my-2 py-2 pl-2 text-xl select-none text-white"
                                             }`

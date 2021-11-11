@@ -78,7 +78,7 @@ const AddProduct = () => {
 
 
             {/* submit button */}
-            <input className="w-full mx-auto px-4 p-2 bg-green-500 rounded-md text-white cursor-pointer" type="submit" name="ADD PRODUCT" />
+            <input className="w-full mx-auto px-4 p-2 bg-blue-500 rounded-md text-white cursor-pointer" type="submit" name="ADD PRODUCT" />
         </form>
     );
 };

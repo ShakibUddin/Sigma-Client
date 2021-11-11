@@ -78,7 +78,7 @@ const SignUp = () => {
                 <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Address" {...register("address")} />
                 {errors.address && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.address?.message}</p>}
 
-                <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-green-500 rounded-md text-white cursor-pointer" type="submit" value="PURCHASE" />
+                <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-blue-500 rounded-md text-white cursor-pointer" type="submit" value="PURCHASE" />
             </form>
         </div>
     );
