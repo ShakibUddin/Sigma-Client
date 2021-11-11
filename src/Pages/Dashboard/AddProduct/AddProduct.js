@@ -19,11 +19,11 @@ const AddProduct = () => {
         name: Yup.string()
             .required('Name is required')
             .min(3, 'Name must be at least 3 characters')
-            .max(30, 'Name must be at least 30 characters'),
+            .max(200, 'Name must be at least 200 characters'),
         description: Yup.string()
             .required('Description is required')
             .min(6, 'Description must be at least 6 characters')
-            .max(100, 'Description must be at least 100 characters'),
+            .max(500, 'Description must be at least 500 characters'),
         image: Yup.string()
             .required('Image Url is required')
             .matches(imageRegex, { message: "Invalid image url", excludeEmptyString: true })

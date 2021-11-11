@@ -134,6 +134,7 @@ const useFirebase = () => {
         signOut(auth)
             .then(() => {
                 setUser({});
+                setRole("");
             })
             .finally(() => setIsLoading(false));
     }

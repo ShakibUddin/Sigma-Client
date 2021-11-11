@@ -1,13 +1,14 @@
 import { faBars, faCreditCard, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { Route, useRouteMatch } from 'react-router';
+import { Route, useLocation, useRouteMatch } from 'react-router';
 import { Link, Switch } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import DashboardSection from './DashboardSection/DashboardSection';
 
 const Dashboard = () => {
+    const location = useLocation();
     const [collapse, setCollapse] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState("");
     const userMenus = [{ name: "Pay", path: "pay", icon: faCreditCard }, { name: "Orders", path: "orders", icon: faShoppingCart }, { name: "Review", path: "review", icon: faEdit }, { name: "Logout", icon: faSignOutAlt }];
@@ -49,7 +50,9 @@ const Dashboard = () => {
                         {
                             menus.map((menu, index) => {
                                 if (index === menus.length - 1) {
-                                    return <button className="my-2 py-2 pl-2 text-xl select-none text-white" key={index} onClick={logout} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</button>;
+                                    return <Link key={index} className="my-2 py-2 pl-2 text-xl select-none text-white" to="/home"><button onClick={() => {
+                                        logout();
+                                    }} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</button></Link>;
                                 }
                                 return <Link key={index} to={`${url}/${menu.path}`}>
                                     <p

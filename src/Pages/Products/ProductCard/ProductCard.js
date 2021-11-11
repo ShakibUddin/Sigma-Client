@@ -1,14 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useAuth from '../../../Hooks/useAuth';
+import Swal from 'sweetalert2';
 import useData from '../../../Hooks/useData';
 
 const ProductCard = (props) => {
     const { _id, name, description, price, image } = props.data;
-    const { role } = useAuth();
     const { deleteProduct } = useData();
-    const showPurchaseButton = props.showPurchaseButton;
+
     const showDeleteButton = props.showDeleteButton;
+    const showPurchaseButton = props.showPurchaseButton;
+
+    function openModal() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Are you sure you want to delete ${name}? You won't be able to revert this!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProduct(_id);
+            }
+        })
+    }
+
     return (
         <div className="w-full shadow-md p-4 flex flex-col justify-between bg-white">
             <div className="w-4/12 h-52 mx-auto">
@@ -20,10 +37,10 @@ const ProductCard = (props) => {
             </div>
             <div className="w-full flex flex-col items-center">
                 <p className="text-2xl text-green-500 font-bold my-2">${price}</p>
-                {showPurchaseButton && role === "USER" && <Link className="w-3/5 py-2 px-4 bg-green-500" to={`/purchase/${_id}`}>
+                {showPurchaseButton && <Link className="w-3/5 py-2 px-4 bg-green-500" to={`/purchase/${_id}`}>
                     <button className=" w-full  text-white">BUY</button>
                 </Link>}
-                {showDeleteButton && role === "ADMIN" && <button className="w-3/5 py-2 px-4 bg-red-500 text-white" onClick={() => deleteProduct(_id)}>DELETE</button>}
+                {showDeleteButton && <button className="w-3/5 py-2 px-4 bg-red-500 text-white" onClick={() => openModal()}>DELETE</button>}
             </div>
         </div>
     );

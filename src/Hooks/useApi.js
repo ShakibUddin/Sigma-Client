@@ -37,7 +37,7 @@ let useApi = () => {
         axios.post(saveProductsUrl, productData)
             .then(response => {
                 if (response.data) {
-
+                    fetchProducts();
                     Swal.fire({
                         icon: 'success',
                         title: 'Product Uploaded Successfully',
@@ -203,7 +203,7 @@ let useApi = () => {
                     fetchPurchases();
                     Swal.fire({
                         icon: 'success',
-                        title: 'Purchase approved successfully',
+                        title: 'Order shipped successfully',
                         showCloseButton: true,
                         showConfirmButton: false,
                     })
