@@ -7,9 +7,8 @@ import logo from '../../../../Images/logo.jpg';
 
 const NavBar = () => {
     const { user, role, logout } = useAuth();
-    const navigation = [];
+    const navigation = [{ name: 'Home', to: '/home' }];
 
-    if (role !== 'ADMIN') navigation.push({ name: 'Home', to: '/home' });
     if (role !== 'ADMIN') navigation.push({ name: 'Products', to: '/products' });
     if (user?.email) navigation.push({ name: 'Dashboard', to: '/dashboard' });
 

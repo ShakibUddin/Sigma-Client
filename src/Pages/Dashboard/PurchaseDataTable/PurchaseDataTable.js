@@ -5,7 +5,7 @@ import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const PurchaseDataTable = () => {
-    const { purchases, fetchPurchases, approvePurchase, deletePurchase } = useData();
+    const { purchases, fetchPurchases, deletePurchase } = useData();
     const [myPurchases, setMyPurchases] = useState([]);
     const { user } = useAuth();
     useEffect(() => {
@@ -15,24 +15,6 @@ const PurchaseDataTable = () => {
     useEffect(() => {
         setMyPurchases(purchases.filter(purchase => purchase.email.toString() === user?.email.toString()));
     }, [purchases, user?.email]);
-
-    const handleApproveClick = (purchase) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: `Approve ${purchase.user}'s ${purchase.product} order?`,
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Approve',
-            confirmButtonColor: "#3386FF",
-            showLoaderOnConfirm: true,
-            preConfirm: () => {
-                return approvePurchase({ ...purchase });
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-        });
-    }
 
     function openModal(purchase) {
         Swal.fire({
@@ -70,6 +52,8 @@ const PurchaseDataTable = () => {
 
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Price: <span className="text-gray-600 text-xs text-left py-3 ">${purchase.price}</span></p>
 
+                        <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Status: <span className={`text-white rounded-md p-1 ${purchase.status === "Pending" ? "bg-yellow-500" : "bg-green-500"} text-xs text-left py-3 `}>{purchase.status}</span></p>
+
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">User: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.user}</span></p>
 
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Email: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.email}</span></p>
@@ -81,10 +65,6 @@ const PurchaseDataTable = () => {
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Date: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.date}</span></p>
                     </div>
                     <div className="flex justify-center">
-                        {user.role === "ADMIN" && <button className="w-2/4 mx-1 p-2 bg-blue-500 text-white" onClick={() => {
-                            handleApproveClick(purchase);
-                        }}
-                        >Approve</button>}
                         <button className="w-2/4 mx-1 p-2 bg-red-500 text-white" onClick={() => {
                             openModal(purchase);
                         }}>

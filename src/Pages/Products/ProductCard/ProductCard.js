@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useAuth from '../../../Hooks/useAuth';
 
 const ProductCard = (props) => {
     const { _id, name, description, price, image } = props.data;
+    const { role } = useAuth();
     const showButton = props.showButton;
     return (
         <div className="w-full shadow-md p-4 flex flex-col justify-between bg-white">
@@ -15,7 +17,7 @@ const ProductCard = (props) => {
             </div>
             <div className="w-full flex flex-col items-center">
                 <p className="text-2xl text-green-500 font-bold my-2">${price}</p>
-                {showButton && <Link className="w-3/5 py-2 px-4 bg-green-500" to={`/purchase/${_id}`}>
+                {showButton && role === "USER" && <Link className="w-3/5 py-2 px-4 bg-green-500" to={`/purchase/${_id}`}>
                     <button className=" w-full  text-white">Buy</button>
                 </Link>}
             </div>

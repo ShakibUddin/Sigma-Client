@@ -156,11 +156,11 @@ let useApi = () => {
                 console.log(error);
             });
     }
-    const approvePurchase = ({ _id, user, email, mobile, address, productId, product, date, price, status }) => {
-        axios.put(approvePurchaseUrl, { user, email, mobile, address, productId, product, date, price, status })
+    const approvePurchase = (_id) => {
+        axios.put(`${approvePurchaseUrl}/${_id}`)
             .then(response => {
                 if (response.data) {
-                    deletePurchase(_id);
+                    fetchPurchases();
                     Swal.fire({
                         icon: 'success',
                         title: 'Purchase approved successfully',
@@ -169,6 +169,9 @@ let useApi = () => {
                     })
                 }
                 else {
+                    Swal.showValidationMessage(
+                        `Oops! Something is wrong.`
+                    );
                     throw new Error(response.statusText);
                 }
 
@@ -176,7 +179,7 @@ let useApi = () => {
             .catch(error => {
                 Swal.showValidationMessage(
                     `Oops! Something is wrong.`
-                )
+                );
             })
     }
 
