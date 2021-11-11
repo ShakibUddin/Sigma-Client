@@ -1,18 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuth from '../../Hooks/useAuth';
+import useData from '../../Hooks/useData';
 
 const SignUp = () => {
 
     const {
         handleFirebaseEmailSignUp, signupError, user
     } = useAuth();
-    const location = useLocation();
+    const { locationState } = useData();
     const history = useHistory();
-    const redirect_uri = location.state?.from || '/home';
+    const redirect_uri = locationState?.from || '/home';
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const validationSchema = Yup.object().shape({

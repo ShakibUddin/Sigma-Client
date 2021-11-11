@@ -22,11 +22,11 @@ const Contact = () => {
     }).required();
 
     const formOptions = { resolver: yupResolver(validationSchema) };
-    const { register, reset, handleSubmit, formState: { errors } } = useForm(formOptions);
+    const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
         Swal.fire({
-            icon: 'Thank You',
-            title: 'We received your message',
+            title: 'Thank You',
+            text: 'We received your message',
             showCloseButton: true,
             showConfirmButton: false,
         })

@@ -66,7 +66,7 @@ const ManageOrders = () => {
 
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Price: <span className="text-gray-600 text-xs text-left py-3 ">${purchase.price}</span></p>
 
-                        <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Status: <span className={`text-white rounded-md p-1 ${purchase.status === "Pending" ? "bg-yellow-500" : "bg-blue-500"} text-xs text-left py-3 `}>{purchase.status}</span></p>
+                        <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Status: <span className={`text-white rounded-md p-1 ${purchase.status === "Pending" ? "bg-yellow-500" : "bg-green-500"} text-xs text-left py-3 `}>{purchase.status}</span></p>
 
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">User: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.user}</span></p>
 

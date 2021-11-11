@@ -10,6 +10,8 @@ let useApi = () => {
     const [purchases, setPurchases] = useState([]);
     const [purchaseSaved, setPurchaseSaved] = useState(false);
     const [reviewSaved, setReviewSaved] = useState(false);
+    const [locationState, setLocationState] = useState();
+
 
     const getProductsUrl = `${serverUrl}/products`;
     const saveProductsUrl = `${serverUrl}/product/add`;
@@ -21,6 +23,10 @@ let useApi = () => {
     const deletePurchaseUrl = `${serverUrl}/purchase/delete`;//add id
     const approvePurchaseUrl = `${serverUrl}/purchase/update`;//add id
     const makeAdminUrl = `${serverUrl}/admin`;//add id
+
+    const updateLocationState = (state) => {
+        setLocationState(state);
+    }
 
     //----------------------Products Get,Post,Delete Code------------------
     const fetchProducts = () => {
@@ -271,7 +277,7 @@ let useApi = () => {
     }
 
 
-    return { fetchProducts, products, saveProduct, deleteProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase, makeAdmin };
+    return { fetchProducts, products, saveProduct, deleteProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase, makeAdmin, updateLocationState, locationState };
 }
 
 export default useApi;

@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useHistory, useLocation } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuth from '../../Hooks/useAuth';
+import useData from '../../Hooks/useData';
 
 const SignIn = () => {
     const {
@@ -17,6 +18,7 @@ const SignIn = () => {
         signinError,
         user
     } = useAuth();
+    const { updateLocationState } = useData();
     const location = useLocation();
     const history = useHistory();
     const user_redirect_uri = location.state?.from || '/home';
@@ -41,6 +43,12 @@ const SignIn = () => {
     const redirectUserAfterSignIn = () => {
         history.push(user_redirect_uri);
     }
+
+
+    //saving location state
+    useEffect(() => {
+        updateLocationState(location.state);
+    }, [location.state, updateLocationState])
 
     useEffect(() => {
         if (user.email) history.push(user_redirect_uri);

@@ -48,7 +48,7 @@ const SignUp = () => {
 
                 <StarRatings
                     rating={rating}
-                    changeRating={(value) => { console.log(value); handleRatingChange(value) }}
+                    changeRating={(value) => { handleRatingChange(value) }}
                     starDimension="30px"
                     starRatedColor="orange"
                     numberOfStars={5}
