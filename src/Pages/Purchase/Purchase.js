@@ -14,7 +14,7 @@ const SignUp = () => {
     const {
         savePurchase, purchaseSaved, setPurchaseSaved, products
     } = useData();
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const history = useHistory();
     const redirect_uri = '/home';
 
@@ -33,7 +33,7 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        savePurchase({ user: data.name, email: data.email, mobile: data.mobile, address: data.address, productId: selectedProduct._id, product: selectedProduct.name, price: selectedProduct.price, date: new Date().toDateString(), status: "Pending" });
+        savePurchase({ user: data.name, email: data.email, mobile: data.mobile, address: data.address, productId: selectedProduct._id, product: selectedProduct.name, price: selectedProduct.price, date: new Date().toDateString(), status: "Pending" }, token);
     };
 
     useEffect(() => {

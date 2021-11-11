@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createUserWithEmailAndPassword, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, getIdToken, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { serverUrl } from "../Constants/Constants";
 import initializeFirebase from '../Firebase/firebase.init';
@@ -12,6 +12,7 @@ const useFirebase = () => {
     const gitHubProvider = new GithubAuthProvider();
     const [signupError, setSignupError] = useState("");
     const [signinError, setSigninError] = useState("");
+    const [token, setToken] = useState("");
     const [role, setRole] = useState("");
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -121,6 +122,10 @@ const useFirebase = () => {
             if (user) {
                 setUser(user);
                 getUserRole(user.email);
+                getIdToken(user)
+                    .then(idToken => {
+                        setToken(idToken);
+                    });
             } else {
                 setUser({});
                 setRole("");
@@ -147,6 +152,7 @@ const useFirebase = () => {
         signupError,
         signinError,
         user,
+        token,
         role,
         isLoading,
         logout

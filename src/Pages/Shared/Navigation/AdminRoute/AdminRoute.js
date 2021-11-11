@@ -1,0 +1,38 @@
+import React from 'react';
+import Loader from "react-loader-spinner";
+import { Redirect, Route } from 'react-router';
+import useAuth from '../../../../Hooks/useAuth';
+
+const AdminRoute = ({ children, ...rest }) => {
+    const { user, role, isLoading } = useAuth();
+    if (isLoading) return (<div className='w-full flex justify-center items-center h-96'>
+
+        <Loader
+            type="Bars"
+            color="#3386FF"
+            height={100}
+            width={100}
+            timeout={4000}
+        />
+
+    </div>);
+    return (
+        <Route
+            {...rest}
+            render={({ location }) =>
+                user.email && role === "ADMIN" ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/home",
+                            state: { from: location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
+
+export default AdminRoute;

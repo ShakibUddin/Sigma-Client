@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const ProductCard = (props) => {
     const { _id, name, description, price, image } = props.data;
     const { deleteProduct } = useData();
+    const { token } = useAuth();
 
     const showDeleteButton = props.showDeleteButton;
     const showPurchaseButton = props.showPurchaseButton;
@@ -21,7 +23,7 @@ const ProductCard = (props) => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteProduct(_id);
+                deleteProduct(_id, token);
             }
         })
     }

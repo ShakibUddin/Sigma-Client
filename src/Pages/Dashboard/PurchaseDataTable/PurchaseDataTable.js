@@ -7,10 +7,10 @@ import useData from '../../../Hooks/useData';
 const PurchaseDataTable = () => {
     const { purchases, fetchPurchases, deletePurchase } = useData();
     const [myPurchases, setMyPurchases] = useState([]);
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     useEffect(() => {
-        fetchPurchases();
-    }, [fetchPurchases]);
+        fetchPurchases(token);
+    }, [fetchPurchases, token]);
 
     useEffect(() => {
         setMyPurchases(purchases.filter(purchase => purchase.email.toString() === user?.email.toString()));
@@ -27,7 +27,7 @@ const PurchaseDataTable = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                deletePurchase(purchase._id);
+                deletePurchase(purchase._id, token);
             }
         })
     }

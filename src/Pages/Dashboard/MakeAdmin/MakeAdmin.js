@@ -3,12 +3,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
+import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const MakeAdmin = () => {
     const {
         makeAdmin
     } = useData();
+    const { token } = useAuth();
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -19,7 +21,7 @@ const MakeAdmin = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, reset, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        makeAdmin(data.email);
+        makeAdmin(data.email, token);
         reset();
     };
 

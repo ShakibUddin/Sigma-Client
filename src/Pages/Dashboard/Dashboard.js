@@ -1,14 +1,15 @@
 import { faBars, faCreditCard, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { Route, useLocation, useRouteMatch } from 'react-router';
+import { useRouteMatch } from 'react-router';
 import { Link, Switch } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
+import AdminRoute from '../Shared/Navigation/AdminRoute/AdminRoute';
+import PrivateRoute from '../Shared/Navigation/PrivateRoute/PrivateRoute';
 import DashboardSection from './DashboardSection/DashboardSection';
 
 const Dashboard = () => {
-    const location = useLocation();
     const [collapse, setCollapse] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState("");
     const userMenus = [{ name: "Pay", path: "pay", icon: faCreditCard }, { name: "Orders", path: "orders", icon: faShoppingCart }, { name: "Review", path: "review", icon: faEdit }, { name: "Logout", icon: faSignOutAlt }];
@@ -75,9 +76,17 @@ const Dashboard = () => {
 
             <div className="w-full">
                 <Switch>
-                    <Route path={`${path}/:sectionId`}>
-                        <DashboardSection />
-                    </Route>
+                    {
+                        role === "USER" ?
+                            <PrivateRoute path={`${path}/:sectionId`}>
+                                <DashboardSection />
+                            </PrivateRoute>
+                            :
+                            <AdminRoute path={`${path}/:sectionId`}>
+                                <DashboardSection />
+                            </AdminRoute>
+                    }
+
                 </Switch>
             </div>
         </div >

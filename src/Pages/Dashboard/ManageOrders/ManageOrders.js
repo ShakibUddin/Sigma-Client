@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Loader from 'react-loader-spinner';
 import Swal from 'sweetalert2';
+import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const ManageOrders = () => {
-    const { purchases, approvePurchase, deletePurchase } = useData();
+    const { purchases, fetchPurchases, approvePurchase, deletePurchase } = useData();
+    const { token } = useAuth();
+
+    useEffect(() => {
+        fetchPurchases(token);
+    }, [fetchPurchases, token])
 
     const handleApproveClick = (purchase) => {
         Swal.fire({
@@ -18,7 +24,7 @@ const ManageOrders = () => {
             confirmButtonColor: "#3386FF",
             showLoaderOnConfirm: true,
             preConfirm: () => {
-                return approvePurchase(purchase._id);
+                return approvePurchase(purchase._id, token);
             },
             allowOutsideClick: () => !Swal.isLoading()
         });
@@ -35,7 +41,7 @@ const ManageOrders = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                deletePurchase(purchase._id);
+                deletePurchase(purchase._id, token);
             }
         })
     }

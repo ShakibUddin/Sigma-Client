@@ -11,7 +11,6 @@ let useApi = () => {
     const [purchaseSaved, setPurchaseSaved] = useState(false);
     const [reviewSaved, setReviewSaved] = useState(false);
 
-
     const getProductsUrl = `${serverUrl}/products`;
     const saveProductsUrl = `${serverUrl}/product/add`;
     const deleteProductUrl = `${serverUrl}/product/delete`;//add id
@@ -33,7 +32,9 @@ let useApi = () => {
     useEffect(() => {
         fetchProducts();
     }, []);
-    const saveProduct = (productData) => {
+    const saveProduct = (productData, token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.post(saveProductsUrl, productData)
             .then(response => {
                 if (response.data) {
@@ -63,7 +64,9 @@ let useApi = () => {
                 })
             })
     }
-    const deleteProduct = (id) => {
+    const deleteProduct = (id, token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.delete(`${deleteProductUrl}/${id}`)
             .then(function (response) {
                 if (response.data) {
@@ -93,10 +96,10 @@ let useApi = () => {
                 setReviews(response.data);
             }).catch(e => console.log(e));
     }
-    useEffect(() => {
-        fetchReviews();
-    }, []);
-    const saveReview = ({ user, rating, description }) => {
+
+    const saveReview = ({ user, rating, description }, token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.post(saveReviewUrl, { user, rating, description })
             .then(response => {
                 if (response.data) {
@@ -132,16 +135,18 @@ let useApi = () => {
     }
 
     //----------------------Purchases Get,Post Code------------------
-    const fetchPurchases = () => {
+    const fetchPurchases = (token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.get(getPurchasesUrl)
             .then(response => {
                 setPurchases(response.data);
             }).catch(e => console.log(e));
     }
-    useEffect(() => {
-        fetchPurchases();
-    }, []);
-    const savePurchase = ({ user, email, mobile, address, productId, product, date, price, status }) => {
+
+    const savePurchase = ({ user, email, mobile, address, productId, product, date, price, status }, token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.post(savePurchaseUrl, { user, email, mobile, address, productId, product, date, price, status })
             .then(response => {
                 if (response.data) {
@@ -174,7 +179,9 @@ let useApi = () => {
                 })
             })
     }
-    const deletePurchase = (id) => {
+    const deletePurchase = (id, token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.delete(`${deletePurchaseUrl}/${id}`)
             .then(function (response) {
                 if (response.data) {
@@ -185,7 +192,7 @@ let useApi = () => {
                         showConfirmButton: false,
                     })
                     //fetch new data
-                    fetchPurchases();
+                    fetchPurchases(token);
                 }
             })
             .catch(function (error) {
@@ -196,11 +203,13 @@ let useApi = () => {
                 })
             });
     }
-    const approvePurchase = (_id) => {
+    const approvePurchase = (_id, token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.put(`${approvePurchaseUrl}/${_id}`)
             .then(response => {
                 if (response.data) {
-                    fetchPurchases();
+                    fetchPurchases(token);
                     Swal.fire({
                         icon: 'success',
                         title: 'Order shipped successfully',
@@ -228,11 +237,13 @@ let useApi = () => {
     }
 
     //----------------------Make Admin Code------------------
-    const makeAdmin = (email) => {
+    const makeAdmin = (email, token) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
         axios.put(`${makeAdminUrl}/${email}`)
             .then(response => {
                 if (response.data) {
-                    fetchPurchases();
+                    fetchPurchases(token);
                     Swal.fire({
                         icon: 'success',
                         title: 'Admin Created Successfully.',

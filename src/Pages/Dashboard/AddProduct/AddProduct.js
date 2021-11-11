@@ -5,12 +5,14 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
+import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const AddProduct = () => {
     const {
         saveProduct
     } = useData();
+    const { token } = useAuth();
     const history = useHistory();
     const redirect_uri = '/home';
     const imageRegex = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
@@ -39,7 +41,7 @@ const AddProduct = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm(formOptions);
 
     const onSubmit = data => {
-        saveProduct(data);
+        saveProduct(data, token);
         history.push(redirect_uri);
         reset();
     };

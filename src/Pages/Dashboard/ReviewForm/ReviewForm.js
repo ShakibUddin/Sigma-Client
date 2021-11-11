@@ -13,7 +13,7 @@ const SignUp = () => {
     const {
         saveReview, reviewSaved, setReviewSaved
     } = useData();
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const history = useHistory();
     const redirect_uri = '/home';
 
@@ -27,7 +27,7 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        saveReview({ user: data.name, rating: rating.toString(), description: data.description });
+        saveReview({ user: data.name, rating: rating.toString(), description: data.description }, token);
     };
 
     useEffect(() => {
