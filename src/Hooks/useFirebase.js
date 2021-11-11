@@ -110,7 +110,7 @@ const useFirebase = () => {
                     console.log(loggedInUser);
                     setUser(loggedInUser);
                     saveUserInDB(loggedInUser);
-                    getUserRole(loggedInUser.email);
+                    setRole("USER");
                     setSignupError("");
                 });
             })

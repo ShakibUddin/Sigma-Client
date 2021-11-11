@@ -23,6 +23,7 @@ const Dashboard = () => {
 
     //set menu according to user role
     useEffect(() => {
+        console.log(role);
         if (role === "ADMIN") setMenus(adminMenus);
         else if (role === "USER") setMenus(userMenus);
     }, [role]);
