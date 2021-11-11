@@ -14,14 +14,16 @@ let useApi = () => {
 
     const getProductsUrl = `${serverUrl}/products`;
     const saveProductsUrl = `${serverUrl}/product/add`;
+    const deleteProductUrl = `${serverUrl}/product/delete`;//add id
     const getReviewsUrl = `${serverUrl}/reviews`;
     const saveReviewUrl = `${serverUrl}/review/add`;
     const getPurchasesUrl = `${serverUrl}/purchases`;
     const savePurchaseUrl = `${serverUrl}/purchase/add`;
     const deletePurchaseUrl = `${serverUrl}/purchase/delete`;//add id
     const approvePurchaseUrl = `${serverUrl}/purchase/update`;//add id
+    const makeAdminUrl = `${serverUrl}/admin`;//add id
 
-    //----------------------Products Get,Post Code------------------
+    //----------------------Products Get,Post,Delete Code------------------
     const fetchProducts = () => {
         axios.get(getProductsUrl)
             .then(response => {
@@ -31,8 +33,8 @@ let useApi = () => {
     useEffect(() => {
         fetchProducts();
     }, []);
-    const saveProduct = ({ name, description, price, image }) => {
-        axios.post(saveProductsUrl, { name, description, price, image })
+    const saveProduct = (productData) => {
+        axios.post(saveProductsUrl, productData)
             .then(response => {
                 if (response.data) {
 
@@ -44,18 +46,44 @@ let useApi = () => {
                     })
                 }
                 else {
-                    Swal.showValidationMessage(
-                        `Oops! Something is wrong.`
-                    )
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                     throw new Error(response.statusText);
                 }
 
             })
             .catch(error => {
-                Swal.showValidationMessage(
-                    `Oops! Something is wrong.`
-                )
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
             })
+    }
+    const deleteProduct = (id) => {
+        axios.delete(`${deleteProductUrl}/${id}`)
+            .then(function (response) {
+                if (response.data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Product deleted successfully.',
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    })
+                    //fetch new data
+                    fetchProducts();
+                }
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            });
     }
 
     //----------------------Reviews Get,Post Code------------------
@@ -84,18 +112,22 @@ let useApi = () => {
                 }
                 else {
                     setReviewSaved(false);
-                    Swal.showValidationMessage(
-                        `Oops! Something is wrong.`
-                    )
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                     throw new Error(response.statusText);
                 }
 
             })
             .catch(error => {
                 setReviewSaved(false);
-                Swal.showValidationMessage(
-                    `Oops! Something is wrong.`
-                )
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
             })
     }
 
@@ -124,18 +156,22 @@ let useApi = () => {
                 }
                 else {
                     setPurchaseSaved(false);
-                    Swal.showValidationMessage(
-                        `Oops! Something is wrong.`
-                    )
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                     throw new Error(response.statusText);
                 }
 
             })
             .catch(error => {
                 setPurchaseSaved(false);
-                Swal.showValidationMessage(
-                    `Oops! Something is wrong.`
-                )
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
             })
     }
     const deletePurchase = (id) => {
@@ -144,7 +180,7 @@ let useApi = () => {
                 if (response.data) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Purchase deleted successfully.',
+                        title: 'Order deleted successfully.',
                         showCloseButton: true,
                         showConfirmButton: false,
                     })
@@ -153,7 +189,11 @@ let useApi = () => {
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
             });
     }
     const approvePurchase = (_id) => {
@@ -169,22 +209,58 @@ let useApi = () => {
                     })
                 }
                 else {
-                    Swal.showValidationMessage(
-                        `Oops! Something is wrong.`
-                    );
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                     throw new Error(response.statusText);
                 }
 
             })
             .catch(error => {
-                Swal.showValidationMessage(
-                    `Oops! Something is wrong.`
-                );
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
+            })
+    }
+
+    //----------------------Make Admin Code------------------
+    const makeAdmin = (email) => {
+        axios.put(`${makeAdminUrl}/${email}`)
+            .then(response => {
+                if (response.data) {
+                    fetchPurchases();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Admin Created Successfully.',
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                    throw new Error(response.statusText);
+                }
+
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
             })
     }
 
 
-    return { fetchProducts, products, saveProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase };
+    return { fetchProducts, products, saveProduct, deleteProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase, makeAdmin };
 }
 
 export default useApi;

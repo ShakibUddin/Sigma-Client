@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import AddAdmin from '../AddAdmin/AddAdmin';
 import AddProduct from '../AddProduct/AddProduct';
+import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import ManageOrders from '../ManageOrders/ManageOrders';
 import ManageProducts from '../ManageProducts/ManageProducts';
 import Payment from '../Payment/Payment';
@@ -16,7 +16,7 @@ const DashboardSection = () => {
     if (sectionId === "manage_orders") return (<ManageOrders></ManageOrders>);
     if (sectionId === "manage_products") return (<ManageProducts></ManageProducts>);
     if (sectionId === "add_product") return (<AddProduct></AddProduct>);
-    if (sectionId === "make_admin") return (<AddAdmin></AddAdmin>);
+    if (sectionId === "make_admin") return (<MakeAdmin></MakeAdmin>);
 };
 
 export default DashboardSection;

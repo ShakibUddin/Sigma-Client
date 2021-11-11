@@ -63,7 +63,7 @@ const SignUp = () => {
     return (
         <div className="w-full flex flex-wrap">
             <div style={{ minWidth: "300px" }} className="lg:w-1/3 md:w-2/4 w-full p-3">
-                <ProductCard data={selectedProduct} showButton={false}></ProductCard>
+                <ProductCard data={selectedProduct} showPurchaseButton={false}></ProductCard>
             </div>
             <form style={{ minWidth: "300px" }} className="lg:w-2/4 md:w-2/4 w-full mx-auto p-3 flex flex-col items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
                 <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" defaultValue={user.name ? user.name : user.displayName} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />

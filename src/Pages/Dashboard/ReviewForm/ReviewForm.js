@@ -8,7 +8,7 @@ import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const SignUp = () => {
-    const [rating, setRating] = useState(1);
+    const [rating, setRating] = useState(0);
 
     const {
         saveReview, reviewSaved, setReviewSaved
