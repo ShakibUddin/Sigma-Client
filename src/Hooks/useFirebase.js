@@ -24,12 +24,13 @@ const useFirebase = () => {
     }
 
     useEffect(() => {
+        user.name = user.displayName;
         axios.get(`${getUserRoleUrl}/${user.email}`).then(response => {
             if (response.status === 200) {
                 setRole(response.data);
             }
         });
-    }, [getUserRoleUrl, user.email])
+    }, [getUserRoleUrl, user, user.email])
 
 
 

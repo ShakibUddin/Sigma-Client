@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import StarRatings from 'react-star-ratings';
+import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
@@ -27,13 +28,31 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token);
+        //checkig if user gave zero rating
+        if (rating === 0) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `Do you want to give zero rating?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token);
+                }
+            })
+        }
+        else {
+            saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token);
+        }
+
     };
 
     useEffect(() => {
         //if purchase is saved redirect user back to home 
         if (reviewSaved) {
-            history.push(redirect_uri);
             setReviewSaved(false);
         }
     }, [history, reviewSaved, setReviewSaved]);

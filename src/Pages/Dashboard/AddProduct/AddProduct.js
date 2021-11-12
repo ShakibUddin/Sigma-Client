@@ -42,7 +42,6 @@ const AddProduct = () => {
 
     const onSubmit = data => {
         saveProduct(data, token);
-        history.push(redirect_uri);
         reset();
     };
 

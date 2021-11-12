@@ -64,7 +64,7 @@ const NavBar = () => {
                                 </div>
                             </div>
                             <div className="flex lg:flex-row md:flex-row flex-col items-center w-full lg:w-2/6 lg:justify-end justify-center lg:mr-2">
-                                <p className="text-white p-2">{user.name ? user.name : user.displayName}</p>
+                                <p className="text-white p-2">{user.name}</p>
                                 {!user.email ? <Link className="w-20 bg-blue-500 p-2 rounded-md font-semibold uppercase text-center text-white" to="/signin">Join</Link> : <Link className="p-2 font-semibold text-white bg-blue-500 uppercase" onClick={logout} to="/home">Logout</Link>}
                             </div>
                         </div>
