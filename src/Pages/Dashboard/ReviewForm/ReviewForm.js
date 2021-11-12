@@ -61,7 +61,8 @@ const SignUp = () => {
 
     return (
         <div className='w-full p-2 flex justify-center'>
-            <form className="lg:w-3/4 md:w-2/4 sm:w-3/4 w-10/12 mx-auto bg-white mb-auto flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+            <form className="lg:w-2/5 md:w-2/4 sm:w-3/4 w-10/12 mx-auto bg-white mb-auto flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+                <p className="lg:text-4xl md:text-3xl text-2xl py-10 font-extrabold text-center">We Greatly Appreciate Your Feedback</p>
                 <input className="w-full p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
                 {errors.name && <p className="w-full text-start text-red-600 font-bold">{errors.name?.message}</p>}
 
@@ -79,7 +80,7 @@ const SignUp = () => {
                 <textarea className="w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Description" {...register("description")} />
                 {errors.description && <p className="w-full text-start text-red-600 font-bold">{errors.description?.message}</p>}
 
-                <input className="w-full mx-auto px-4 p-2 bg-blue-500 rounded-md text-white cursor-pointer" type="submit" value="SUBMIT" />
+                <input className="w-full mx-auto px-4 p-2 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md text-white cursor-pointer" type="submit" value="SUBMIT" />
             </form>
         </div>
     );

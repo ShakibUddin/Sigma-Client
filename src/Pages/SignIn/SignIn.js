@@ -66,7 +66,7 @@ const SignIn = () => {
             <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" icon={<FontAwesomeIcon icon={faEye} />} type="password" placeholder="Enter Password" {...register("password")} />
             {errors.password && <p className="lg:w-2/4 md:w-3/4 w-full text-start text-red-600 font-bold">{errors.password?.message}</p>}
 
-            <input className="lg:w-7/12 md:w-3/4 w-full mx-auto py-2 bg-blue-600 rounded-md shadow-md text-white cursor-pointer" type="submit" value="LOGIN" />
+            <input className="lg:w-7/12 md:w-3/4 w-full mx-auto py-2 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md text-white cursor-pointer" type="submit" value="LOGIN" />
             {signinError && <p className="lg:w-2/4 md:w-3/4 w-full text-start text-red-600 font-bold">{signinError}</p>}
 
             <p className="p-5 text-center">Don't have an account? <Link className="text-blue-800" to='/signup'>Register</Link></p>

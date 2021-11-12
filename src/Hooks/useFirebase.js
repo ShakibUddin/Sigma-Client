@@ -109,7 +109,6 @@ const useFirebase = () => {
                         emailVerified: user.emailVerified,
                         role: "USER"
                     };
-                    console.log(loggedInUser);
                     setUser(loggedInUser);
                     saveUserInDB(loggedInUser);
                     setRole("USER");

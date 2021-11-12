@@ -31,7 +31,7 @@ const ProductCard = (props) => {
     return (
         <div className="w-full shadow-md p-4 flex flex-col justify-between bg-white">
             <div className="w-4/12 h-52 mx-auto">
-                <img className="w-full h-full" src={image} alt="" />
+                <img className="w-full h-full " src={image} alt="" />
             </div>
             <div className="w-full">
                 <p className="text-xl text-black font-semibold my-2">{name}</p>
@@ -39,7 +39,7 @@ const ProductCard = (props) => {
             </div>
             <div className="w-full flex flex-col items-center">
                 <p className="text-2xl text-blue-500 font-bold my-2">${price}</p>
-                {showPurchaseButton && <Link className="w-3/5 py-2 px-4 bg-blue-500" to={`/purchase/${_id}`}>
+                {showPurchaseButton && <Link className="w-3/5 py-2 px-4 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-lg" to={`/purchase/${_id}`}>
                     <button className=" w-full  text-white">BUY</button>
                 </Link>}
                 {showDeleteButton && <button className="w-3/5 py-2 px-4 bg-red-500 text-white" onClick={() => openModal()}>DELETE</button>}

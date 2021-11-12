@@ -6,10 +6,11 @@ import { useHistory, useParams } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuth from '../../Hooks/useAuth';
 import useData from '../../Hooks/useData';
-import ProductCard from '../Products/ProductCard/ProductCard';
+import useWindowDimensions from '../../Hooks/useWindowDimensions';
 
 const SignUp = () => {
     const { productId } = useParams();
+    const { height, width } = useWindowDimensions();
     const [selectedProduct, setSelectedProduct] = useState();
     const {
         savePurchase, purchaseSaved, setPurchaseSaved, products
@@ -62,24 +63,38 @@ const SignUp = () => {
     </div>);
     return (
         <div className="w-full flex flex-wrap">
-            <div style={{ minWidth: "300px" }} className="lg:w-1/3 md:w-2/4 w-full p-3">
-                <ProductCard data={selectedProduct} showPurchaseButton={false}></ProductCard>
+            {/* image div */}
+            <div style={{ minWidth: "300px", minHeight: height }} className="lg:w-2/4 md:w-2/4 w-full flex flex-col justify-center items-center">
+                <div className="lg:w-3/5 w-4/5 p-4 flex flex-col justify-between bg-white">
+                    <div className="w-6/12 h-72 mx-auto">
+                        <img className="w-full h-full transition duration-700 ease-in-out transform hover:scale-125" src={selectedProduct.image} alt="" />
+                    </div>
+                </div>
             </div>
-            <form style={{ minWidth: "300px" }} className="lg:w-2/4 md:w-2/4 w-full mx-auto p-3 flex flex-col items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
-                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
-                {errors.name && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.name?.message}</p>}
+            {/* details & form div */}
+            <div className="lg:w-2/4 md:w-2/4 w-full p-3 flex flex-col items-center justify-start pt-8 bg-gradient-to-r from-blue-600 to-blue-500">
+                <div className="lg:w-3/4 md:w-3/4 w-full">
+                    <p className="lg:text-3xl md:text-3xl text2xl font-bold text-white my-2">{selectedProduct.name}</p>
+                    <p className="text-sm text-white my-2">{selectedProduct.description}</p>
+                    <p className="lg:text-3xl md:text-3xl text2xl text-white my-2">${selectedProduct.price}</p>
+                </div>
+                <form style={{ minWidth: "300px" }} className="lg:w-3/4 md:w-3/4 w-full mx-auto flex flex-col items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
+                    <input className="w-full p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
+                    {errors.name && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.name?.message}</p>}
 
-                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="text" defaultValue={user.email} readOnly={true} placeholder="Enter Email" {...register("email")} />
-                {errors.email && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.email?.message}</p>}
+                    <input className="w-full p-3 my-2 border-2 rounded-md" type="text" defaultValue={user.email} readOnly={true} placeholder="Enter Email" {...register("email")} />
+                    {errors.email && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.email?.message}</p>}
 
-                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="number" placeholder="Enter Mobile Number" {...register("mobile")} />
-                {errors.mobile && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.mobile?.message}</p>}
+                    <input className="w-full p-3 my-2 border-2 rounded-md" type="number" placeholder="Enter Mobile Number" {...register("mobile")} />
+                    {errors.mobile && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.mobile?.message}</p>}
 
-                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Address" {...register("address")} />
-                {errors.address && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.address?.message}</p>}
+                    <input className="w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Address" {...register("address")} />
+                    {errors.address && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.address?.message}</p>}
 
-                <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-blue-500 rounded-md text-white cursor-pointer" type="submit" value="PURCHASE" />
-            </form>
+                    <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-white rounded-lg shadow-md text-blue-600 cursor-pointer" type="submit" value="PURCHASE" />
+                </form>
+            </div>
+
         </div>
     );
 };

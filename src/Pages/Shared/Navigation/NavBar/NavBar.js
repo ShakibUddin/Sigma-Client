@@ -25,7 +25,7 @@ const NavBar = () => {
                                 <div className="relative flex items-center justify-between h-16">
                                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                         {/* Mobile menu button*/}
-                                        <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                                        <Disclosure.Button className="inline-flex items-center justify-center p-2 text-white hover:text-white bg-gradient-to-t hover:from-blue-600 hover:to-blue-500 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                                             <span className="sr-only">Open main menu</span>
                                             {open ? (
                                                 <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -49,8 +49,8 @@ const NavBar = () => {
                                                         key={item.name}
                                                         to={item.to}
                                                         className={classNames(
-                                                            'text-gray-300 hover:bg-blue-600 hover:text-white',
-                                                            'px-3 py-2 rounded-md text-sm font-medium'
+                                                            'text-gray-300 bg-gradient-to-t hover:from-blue-600 hover:to-blue-500 rounded-lg shadow-md hover:text-white',
+                                                            'px-3 py-2 text-sm font-medium'
                                                         )}
                                                     >
                                                         {item.name}
@@ -65,7 +65,7 @@ const NavBar = () => {
                             </div>
                             <div className="flex lg:flex-row md:flex-row flex-col items-center w-full lg:w-2/6 lg:justify-end justify-center lg:mr-2">
                                 <p className="text-white p-2">{user.name}</p>
-                                {!user.email ? <Link className="w-20 bg-blue-500 p-2 rounded-md font-semibold uppercase text-center text-white" to="/signin">Join</Link> : <Link className="p-2 font-semibold text-white bg-blue-500 uppercase" onClick={logout} to="/home">Logout</Link>}
+                                {!user.email ? <Link className="w-20 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md p-2 font-semibold uppercase text-center text-white" to="/signin">Join</Link> : <Link className="p-2 font-semibold text-white bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md uppercase" onClick={logout} to="/home">Logout</Link>}
                             </div>
                         </div>
                         <Disclosure.Panel className="sm:hidden">
@@ -75,7 +75,7 @@ const NavBar = () => {
                                         key={item.name}
                                         to={item.to}
                                         className={classNames(
-                                            'text-gray-300 hover:bg-blue-600 hover:text-white',
+                                            'text-gray-300 bg-gradient-to-t hover:from-blue-600 hover:to-blue-500 rounded-lg shadow-md hover:text-white',
                                             'block px-3 py-2 rounded-md text-base font-medium'
                                         )}
                                     >

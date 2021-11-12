@@ -47,7 +47,7 @@ const Dashboard = () => {
             {/* drawer and menu items div */}
             <div className="w-full flex select-none relative">
                 {/* drawer */}
-                <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, minHeight: `${collapse ? "50px" : "220px"}`, zIndex: "2" }} className="h-full grid grid-cols-1 place-content-start bg-blue-500 p-3 absolute" >
+                <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, zIndex: "2" }} className="h-full grid grid-cols-1 place-content-start bg-gradient-to-t from-blue-600 to-blue-500 rounded-r-3xl shadow-lg p-3 absolute" >
                     <FontAwesomeIcon className="text-white font-bold text-xl cursor-pointer ml-2" icon={faBars} onClick={handleSideBarToggle} />
                     {
                         !collapse && <div>

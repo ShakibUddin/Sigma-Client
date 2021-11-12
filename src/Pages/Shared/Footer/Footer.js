@@ -31,7 +31,7 @@ const Footer = () => {
                     <div className="lg:w-3/5 md:w-3/4 w-full mx-auto">
                         <p className="text-xl font-bold text-white my-3">Signup for news and offers from us</p>
                         <input className="p-2 my-3 w-10/12" type="email" placeholder="Enter email" />
-                        <button className="p-2 my-3 w-2/4 bg-blue-500 text-white mx-auto">Subscribe</button>
+                        <button className="p-2 my-3 w-2/4 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md text-white mx-auto">Subscribe</button>
                     </div>
                     <img className="lg:w-3/5 md:w-3/4 w-full mx-auto" src={payment} alt="" />
                 </div>

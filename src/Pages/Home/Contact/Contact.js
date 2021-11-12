@@ -48,7 +48,7 @@ const Contact = () => {
                 <textarea className="lg:w-3/5 w-10/12 p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Message" {...register("message")} />
                 {errors.message && <p className="lg:w-3/5 w-10/12 text-start text-red-600 font-bold">{errors.message?.message}</p>}
 
-                <input className="lg:w-3/5 w-10/12 mx-auto px-4 p-2 bg-blue-600 rounded-md text-white cursor-pointer" type="submit" name="SUBMIT" />
+                <input className="lg:w-3/5 w-10/12 mx-auto px-4 p-2 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md text-white cursor-pointer" type="submit" name="SUBMIT" />
             </form>
         </div>
 
