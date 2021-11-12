@@ -26,8 +26,8 @@ const MakeAdmin = () => {
     };
 
     return (
-        <form className="lg:w-6/12 w-11/12 mx-auto p-5 m-5 flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
-            <p className="text-4xl py-10 font-extrabold">Make Admin</p>
+        <form className="lg:w-7/12 w-11/12 mx-auto p-2 flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+            <p className="text-4xl py-10 font-extrabold text-center">Make Admin</p>
 
             <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Email" {...register("email")} />
             {errors.email && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.email?.message}</p>}

@@ -23,7 +23,6 @@ const Dashboard = () => {
 
     //set menu according to user role
     useEffect(() => {
-        console.log(role);
         if (role === "ADMIN") setMenus(adminMenus);
         else if (role === "USER") setMenus(userMenus);
     }, [role]);
@@ -44,51 +43,56 @@ const Dashboard = () => {
         setSelectedMenu(e.target.innerText);
     }
     return (
-        <div className="w-full flex select-none">
-            <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, minHeight: height }} className="grid grid-cols-1 place-content-start bg-blue-500 pl-3 py-3">
-                <FontAwesomeIcon className="text-white font-bold text-xl mb-3 cursor-pointer" icon={faBars} onClick={handleSideBarToggle} />
-                {
-                    !collapse && <div>
-                        {
-                            menus.map((menu, index) => {
-                                if (index === menus.length - 1) {
-                                    return <Link key={index} className="my-2 py-2 pl-2 text-xl select-none text-white" to="/home"><button onClick={() => {
-                                        logout();
-                                    }} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</button></Link>;
-                                }
-                                return <Link key={index} to={`${url}/${menu.path}`}>
-                                    <p
-                                        onClick={(e) => { handleMenuClick(e) }}
-                                        className={
-                                            `${menu.name.trim() === selectedMenu.trim() ?
-                                                "bg-white my-2 py-2 pl-2 text-xl text-blue-500 select-none"
-                                                :
-                                                "my-2 py-2 pl-2 text-xl select-none text-white"
-                                            }`
-                                        }>
-                                        <FontAwesomeIcon icon={menu.icon} /> {menu.name}
-                                    </p>
-                                </Link>
-                            })
-                        }
-                    </div>
-                }
-            </div>
-
-            <div className="w-full">
-                <Switch>
+        <div className="w-full">
+            {/* drawer and menu items div */}
+            <div className="w-full flex select-none relative">
+                {/* drawer */}
+                <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, minHeight: `${collapse ? "50px" : "220px"}`, zIndex: "2" }} className="h-full grid grid-cols-1 place-content-start bg-blue-500 p-3 absolute" >
+                    <FontAwesomeIcon className="text-white font-bold text-xl cursor-pointer ml-2" icon={faBars} onClick={handleSideBarToggle} />
                     {
-                        role === "USER" ?
-                            <PrivateRoute path={`${path}/:sectionId`}>
-                                <DashboardSection />
-                            </PrivateRoute>
-                            :
-                            <AdminRoute path={`${path}/:sectionId`}>
-                                <DashboardSection />
-                            </AdminRoute>
+                        !collapse && <div>
+                            {
+                                menus.map((menu, index) => {
+                                    if (index === menus.length - 1) {
+                                        return <Link key={index} className="my-2 p-2 text-base select-none text-white" to="/home"><button onClick={() => {
+                                            logout();
+                                        }} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</button></Link>;
+                                    }
+                                    return <Link key={index} to={`${url}/${menu.path}`}>
+                                        <p
+                                            onClick={(e) => { handleMenuClick(e) }}
+                                            className={
+                                                `${menu.name.trim() === selectedMenu.trim() ?
+                                                    "bg-white my-2 p-2 rounded-md text-base text-blue-500 select-none"
+                                                    :
+                                                    "my-2 p-2 text-base rounded-md select-none text-white"
+                                                }`
+                                            }>
+                                            <FontAwesomeIcon icon={menu.icon} /> {menu.name}
+                                        </p>
+                                    </Link>
+                                })
+                            }
+                        </div>
                     }
+                </div>
 
-                </Switch>
+                {/* menu items */}
+                <div style={{ zIndex: "1", minHeight: height }} className={`w-full ${collapse ? "pl-14" : "lg:pl-56"} pl-14`}>
+                    <Switch>
+                        {
+                            role === "USER" ?
+                                <PrivateRoute path={`${path}/:sectionId`}>
+                                    <DashboardSection />
+                                </PrivateRoute>
+                                :
+                                <AdminRoute path={`${path}/:sectionId`}>
+                                    <DashboardSection />
+                                </AdminRoute>
+                        }
+
+                    </Switch>
+                </div>
             </div>
         </div >
     );
