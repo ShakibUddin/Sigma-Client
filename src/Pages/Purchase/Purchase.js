@@ -33,7 +33,7 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        savePurchase({ user: data.name, email: data.email, mobile: data.mobile, address: data.address, productId: selectedProduct._id, product: selectedProduct.name, price: selectedProduct.price, date: new Date().toDateString(), status: "Pending" }, token);
+        savePurchase({ user: user.name, email: data.email, mobile: data.mobile, address: data.address, productId: selectedProduct._id, product: selectedProduct.name, price: selectedProduct.price, date: new Date().toDateString(), status: "Pending" }, token);
     };
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const SignUp = () => {
                 <ProductCard data={selectedProduct} showPurchaseButton={false}></ProductCard>
             </div>
             <form style={{ minWidth: "300px" }} className="lg:w-2/4 md:w-2/4 w-full mx-auto p-3 flex flex-col items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
-                <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" defaultValue={user.name ? user.name : user.displayName} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
+                <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
                 {errors.name && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.name?.message}</p>}
 
                 <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="text" defaultValue={user.email} readOnly={true} placeholder="Enter Email" {...register("email")} />

@@ -249,7 +249,6 @@ let useApi = () => {
         axios.put(`${makeAdminUrl}/${email}`)
             .then(response => {
                 if (response.data) {
-                    fetchPurchases(token);
                     Swal.fire({
                         icon: 'success',
                         title: 'Admin Created Successfully.',

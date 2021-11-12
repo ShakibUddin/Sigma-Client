@@ -22,13 +22,16 @@ const useFirebase = () => {
     const saveUserInDB = (user) => {
         axios.put(upsertUserUrl, { ...user });
     }
-    const getUserRole = (email) => {
-        axios.get(`${getUserRoleUrl}/${email}`).then(response => {
+
+    useEffect(() => {
+        axios.get(`${getUserRoleUrl}/${user.email}`).then(response => {
             if (response.status === 200) {
                 setRole(response.data);
             }
         });
-    }
+    }, [getUserRoleUrl, user.email])
+
+
 
     const handleGoogleSignIn = () => {
         return signInWithPopup(auth, googleProvider)
@@ -39,7 +42,6 @@ const useFirebase = () => {
                     email: email,
                     photo: photoURL,
                     emailVerified: emailVerified,
-                    role: "USER"
                 };
                 setSigninError("");
                 saveUserInDB(loggedInUser);
@@ -59,7 +61,6 @@ const useFirebase = () => {
                     email: email,
                     photo: photoURL,
                     emailVerified: emailVerified,
-                    role: "USER"
                 };
                 setSigninError("");
                 saveUserInDB(loggedInUser);
@@ -123,7 +124,6 @@ const useFirebase = () => {
         const unsubscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
-                getUserRole(user.email);
                 getIdToken(user)
                     .then(idToken => {
                         setToken(idToken);

@@ -27,7 +27,7 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        saveReview({ user: data.name, rating: rating.toString(), description: data.description }, token);
+        saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token);
     };
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const SignUp = () => {
 
     return (
         <div className='w-full p-2 flex justify-center'>
-            <form className="lg:w-2/4 md:w-2/4 sm:w-3/4 w-10/12 p-2 mx-auto bg-white mb-auto flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+            <form className="lg:w-3/4 md:w-2/4 sm:w-3/4 w-10/12 mx-auto bg-white mb-auto flex flex-col" onSubmit={handleSubmit(onSubmit)}>
                 <input className="w-full p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
                 {errors.name && <p className="w-full text-start text-red-600 font-bold">{errors.name?.message}</p>}
 
