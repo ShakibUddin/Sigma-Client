@@ -40,10 +40,9 @@ const SignIn = () => {
         handleFirebaseEmailSignIn(data.email, data.password);
     };
 
-    const redirectUserAfterSignIn = () => {
-        history.push(user_redirect_uri);
-    }
-
+    useEffect(() => {
+        if (user.email) history.push(user_redirect_uri);
+    }, [history, user.email, user_redirect_uri]);
 
     //saving location state
     useEffect(() => {
@@ -75,13 +74,11 @@ const SignIn = () => {
             <div className="lg:w-2/4 w-3/4 flex justify-around">
                 <button className="px-4 p-2 text-2xl border-2 text-black" onClick={(e) => {
                     e.preventDefault();
-                    handleGoogleSignIn().then(() => { redirectUserAfterSignIn() })
+                    handleGoogleSignIn()
                 }}><FontAwesomeIcon icon={faGoogle} /></button>
                 <button className="px-4 p-2 text-2xl border-2 text-black" onClick={(e) => {
                     e.preventDefault();
-                    handleGithubSignIn().then(() => {
-                        redirectUserAfterSignIn();
-                    })
+                    handleGithubSignIn()
                 }}><FontAwesomeIcon icon={faGithub} /></button>
             </div>
         </form>

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useData from '../../../Hooks/useData';
 import ReviewCard from './ReviewCard/ReviewCard';
 
 const Reviews = () => {
-    const { reviews } = useData();
+    const { reviews, fetchReviews } = useData();
+
+    useEffect(() => {
+        fetchReviews();
+    }, [fetchReviews]);
+
     return (
         <div className="lg:w-11/12 md:w-11/12 w-full mx-auto place-content-center grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-4 p-4">
             {
