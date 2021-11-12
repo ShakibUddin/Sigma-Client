@@ -66,16 +66,16 @@ const SignUp = () => {
                 <ProductCard data={selectedProduct} showPurchaseButton={false}></ProductCard>
             </div>
             <form style={{ minWidth: "300px" }} className="lg:w-2/4 md:w-2/4 w-full mx-auto p-3 flex flex-col items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
-                <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
+                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" defaultValue={user.name} readOnly={true} type="text" placeholder="Enter Name" {...register("name")} />
                 {errors.name && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.name?.message}</p>}
 
-                <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="text" defaultValue={user.email} readOnly={true} placeholder="Enter Email" {...register("email")} />
+                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="text" defaultValue={user.email} readOnly={true} placeholder="Enter Email" {...register("email")} />
                 {errors.email && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.email?.message}</p>}
 
-                <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="number" placeholder="Enter Mobile Number" {...register("mobile")} />
+                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="number" placeholder="Enter Mobile Number" {...register("mobile")} />
                 {errors.mobile && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.mobile?.message}</p>}
 
-                <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Address" {...register("address")} />
+                <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Address" {...register("address")} />
                 {errors.address && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.address?.message}</p>}
 
                 <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-blue-500 rounded-md text-white cursor-pointer" type="submit" value="PURCHASE" />

@@ -48,7 +48,7 @@ const AddProduct = () => {
 
     return (
         <form className="lg:w-4/12 md:w-8/12 sm:w-full mx-auto p-2 m-2 flex flex-col items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
-            <p className="text-4xl py-10 font-extrabold text-center">Add A New Product</p>
+            <p className="lg:text-4xl md:text-3xl text-2xl py-10 font-extrabold text-center">Add A New Product</p>
 
             {/* name of product */}
             <div className="w-full flex justify-between bg-white items-center border-2 rounded-md my-2">

@@ -1,5 +1,5 @@
 
-import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect } from 'react';
@@ -8,6 +8,8 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuth from '../../Hooks/useAuth';
 import useData from '../../Hooks/useData';
+import github from '../../Images/github.png';
+import google from '../../Images/google.png';
 
 const SignIn = () => {
     const {
@@ -58,28 +60,30 @@ const SignIn = () => {
             <p className="text-4xl py-10 font-extrabold">SignIn</p>
             {alert && <p className="p-3 text-center bg-blue-400 text-black">{alert}</p>}
 
-            <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Email" {...register("email")} />
-            {errors.email && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.email?.message}</p>}
+            <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Email" {...register("email")} />
+            {errors.email && <p className="lg:w-2/4 md:w-3/4 w-full text-start text-red-600 font-bold">{errors.email?.message}</p>}
 
-            <input className="lg:w-2/4 w-3/4 p-3 my-2 border-2 rounded-md" type="password" placeholder="Enter Password" {...register("password")} />
-            {errors.password && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.password?.message}</p>}
+            <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" icon={<FontAwesomeIcon icon={faEye} />} type="password" placeholder="Enter Password" {...register("password")} />
+            {errors.password && <p className="lg:w-2/4 md:w-3/4 w-full text-start text-red-600 font-bold">{errors.password?.message}</p>}
 
-            <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-blue-600 rounded-md text-white cursor-pointer" type="submit" name="LOGIN" />
-            {signinError && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{signinError}</p>}
+            <input className="lg:w-7/12 md:w-3/4 w-full mx-auto py-2 bg-blue-600 rounded-md shadow-md text-white cursor-pointer" type="submit" value="LOGIN" />
+            {signinError && <p className="lg:w-2/4 md:w-3/4 w-full text-start text-red-600 font-bold">{signinError}</p>}
 
             <p className="p-5 text-center">Don't have an account? <Link className="text-blue-800" to='/signup'>Register</Link></p>
 
             <p className="p-3">or</p>
 
-            <div className="lg:w-2/4 w-3/4 flex justify-around">
-                <button className="px-4 p-2 text-2xl border-2 text-black" onClick={(e) => {
+            <div className="lg:w-2/4 md:w-3/4 w-full flex justify-around">
+
+                <button className="px-4 p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md" onClick={(e) => {
                     e.preventDefault();
                     handleGoogleSignIn()
-                }}><FontAwesomeIcon icon={faGoogle} /></button>
-                <button className="px-4 p-2 text-2xl border-2 text-black" onClick={(e) => {
+                }}><img className="lg:w-7 lg:h-7 md:w-6 md:h-6 w-4 h-4 inline" src={google} alt="" /> Google</button>
+
+                <button className="px-4 p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md" onClick={(e) => {
                     e.preventDefault();
                     handleGithubSignIn()
-                }}><FontAwesomeIcon icon={faGithub} /></button>
+                }}> <img className="lg:w-7 lg:h-7 md:w-6 md:h-6 w-4 h-4 inline" src={github} alt="" /> Github</button>
             </div>
         </form>
     );
