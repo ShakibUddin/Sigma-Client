@@ -16,7 +16,7 @@ const Home = () => {
             <p className="lg:text-3xl text-3xl font-extrabold text-blue-600 text-center my-2 mt-16">See What Our Customers Say</p>
             <Reviews></Reviews>
             <Services></Services>
-            {role !== "Unauthorized" && <Contact></Contact>}
+            {role !== "USER" && <Contact></Contact>}
         </div>
     );
 };
