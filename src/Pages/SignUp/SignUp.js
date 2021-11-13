@@ -44,7 +44,7 @@ const SignUp = () => {
     };
 
     useEffect(() => {
-        if (user.email) history.push(redirect_uri);
+        if (user.email) history.replace(redirect_uri);
     }, [history, redirect_uri, user.email]);
 
     return (

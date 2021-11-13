@@ -13,7 +13,7 @@ const useFirebase = () => {
     const [signupError, setSignupError] = useState("");
     const [signinError, setSigninError] = useState("");
     const [token, setToken] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState("Unauthorized");
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const upsertUserUrl = `${serverUrl}/user`;
@@ -24,17 +24,20 @@ const useFirebase = () => {
     }
 
     useEffect(() => {
-        user.name = user.displayName;
-        axios.get(`${getUserRoleUrl}/${user.email}`).then(response => {
-            if (response.status === 200) {
-                setRole(response.data);
-            }
-        });
-    }, [getUserRoleUrl, user, user.email])
+        axios.get(`${getUserRoleUrl}/${user.email}`)
+            .then(response => {
+                if (response.status === 200) {
+                    setRole(response.data);
+                }
+            })
+            .catch(error => {
+                setSigninError(error.code);
+            });
 
-
+    }, [getUserRoleUrl, user?.email])
 
     const handleGoogleSignIn = () => {
+        setIsLoading(true);
         return signInWithPopup(auth, googleProvider)
             .then(result => {
                 const { displayName, email, photoURL, emailVerified } = result.user;
@@ -55,6 +58,7 @@ const useFirebase = () => {
     }
 
     const handleGithubSignIn = () => {
+        setIsLoading(true);
         return signInWithPopup(auth, gitHubProvider)
             .then(result => {
                 const { displayName, email, photoURL, emailVerified } = result.user;
@@ -75,6 +79,7 @@ const useFirebase = () => {
     }
 
     const handleFirebaseEmailSignIn = (email, password) => {
+        //setIsLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -96,6 +101,7 @@ const useFirebase = () => {
     }
 
     const handleFirebaseEmailSignUp = (name, email, password) => {
+        setIsLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -124,14 +130,20 @@ const useFirebase = () => {
     useEffect(() => {
         const unsubscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setUser(user);
+                const loggedInUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                    emailVerified: user.emailVerified
+                };
+                setUser(loggedInUser);
                 getIdToken(user)
                     .then(idToken => {
                         setToken(idToken);
                     });
             } else {
                 setUser({});
-                setRole("");
+                setRole("Unauthorized");
             }
             setIsLoading(false);
         });
@@ -139,10 +151,11 @@ const useFirebase = () => {
     }, [auth])
 
     const logout = () => {
+        setIsLoading(true);
         signOut(auth)
             .then(() => {
                 setUser({});
-                setRole("");
+                setRole("Unauthorized");
             })
             .finally(() => setIsLoading(false));
     }

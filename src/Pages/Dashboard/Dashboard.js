@@ -82,11 +82,11 @@ const Dashboard = () => {
                     <Switch>
                         {
                             role === "USER" ?
-                                <PrivateRoute path={`${path}/:sectionId`}>
+                                <PrivateRoute exact path={`${path}/:sectionId`}>
                                     <DashboardSection />
                                 </PrivateRoute>
                                 :
-                                <AdminRoute path={`${path}/:sectionId`}>
+                                <AdminRoute eaxct path={`${path}/:sectionId`}>
                                     <DashboardSection />
                                 </AdminRoute>
                         }

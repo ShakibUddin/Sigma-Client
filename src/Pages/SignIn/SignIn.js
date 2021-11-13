@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import Loader from 'react-loader-spinner';
 import { Link, useHistory, useLocation } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuth from '../../Hooks/useAuth';
@@ -16,8 +17,9 @@ const SignIn = () => {
         handleGoogleSignIn,
         handleGithubSignIn,
         handleFirebaseEmailSignIn,
-        alert,
+        isLoading,
         signinError,
+        role,
         user
     } = useAuth();
     const { updateLocationState } = useData();
@@ -42,9 +44,6 @@ const SignIn = () => {
         handleFirebaseEmailSignIn(data.email, data.password);
     };
 
-    useEffect(() => {
-        if (user.email) history.push(user_redirect_uri);
-    }, [history, user.email, user_redirect_uri]);
 
     //saving location state
     useEffect(() => {
@@ -52,14 +51,26 @@ const SignIn = () => {
     }, [location.state, updateLocationState])
 
     useEffect(() => {
-        if (user.email) history.push(user_redirect_uri);
-    }, [history, user.email, user_redirect_uri]);
+        if (role === "USER") history.replace(user_redirect_uri);
+        else if (role === "ADMIN") {
+            history.replace("/dashboard");
+        }
+    }, [role]);
 
     return (
         <form className="lg:w-6/12 w-11/12 mx-auto p-5 m-5 flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
             <p className="text-4xl py-10 font-extrabold">SignIn</p>
-            {alert && <p className="p-3 text-center bg-blue-400 text-black">{alert}</p>}
+            {isLoading && <div className='w-full flex justify-center items-center'>
 
+                <Loader
+                    type="ThreeDots"
+                    color="#3386FF"
+                    height={50}
+                    width={50}
+                    timeout={4000}
+                />
+
+            </div>}
             <input className="lg:w-7/12 md:w-3/4 w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Email" {...register("email")} />
             {errors.email && <p className="lg:w-2/4 md:w-3/4 w-full text-start text-red-600 font-bold">{errors.email?.message}</p>}
 

@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch as RouteSwitch } from 'react-router-dom';
 import AuthProvider from '../../../Contexts/AuthProvider';
 import DataProvider from '../../../Contexts/DataProvider';
 import Dashboard from '../../Dashboard/Dashboard';
-import Payment from '../../Dashboard/Payment/Payment';
 import Home from "../../Home/Home";
 import NotFound from "../../NotFound/NotFound";
 import Products from '../../Products/Products';
@@ -27,7 +26,6 @@ const Navigation = () => {
                         <Route exact path="/products"><Products></Products></Route>
                         <PrivateRoute path="/dashboard"><Dashboard></Dashboard></PrivateRoute>
                         <PrivateRoute exact path="/purchase/:productId"><Purchase></Purchase></PrivateRoute>
-                        <PrivateRoute exact path="/payment/:productId"><Payment></Payment></PrivateRoute>
                         <Route exact path="/signin"><SignIn></SignIn></Route>
                         <Route exact path="/signup"><SignUp></SignUp></Route>
                         <Route path="*"><NotFound></NotFound></Route>
