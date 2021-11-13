@@ -1,6 +1,6 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
@@ -9,7 +9,7 @@ import contactbg from '../../../Images/contactbg.jpg';
 
 const Contact = () => {
     const { user } = useAuth();
-
+    const formRef = useRef();
     const validationSchema = Yup.object().shape({
         name: Yup.string(),
         email: Yup.string(),
@@ -22,7 +22,7 @@ const Contact = () => {
     }).required();
 
     const formOptions = { resolver: yupResolver(validationSchema) };
-    const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
+    const { register, reset, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
         Swal.fire({
             title: 'Thank You',
@@ -32,11 +32,10 @@ const Contact = () => {
         })
     };
 
-
     return (
         <div className="w-full h-screen object-cover bg-fixed bg-gray-600 bg-blend-multiply" style={{ backgroundImage: `url(${contactbg})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center" }}>
 
-            <form className="lg:w-8/12 w-11/12 mx-auto p-5 m-3 flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
+            <form ref={formRef} className="lg:w-8/12 w-11/12 mx-auto p-5 m-3 flex flex-col justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
                 <p className="text-4xl text-white py-10 font-extrabold text-center">We are here for you, Got any questions?</p>
 
                 <input className="lg:w-3/5 w-10/12 p-3 my-2 border-2 rounded-md" type="text" defaultValue={user.name} readOnly={user.email ? true : false} placeholder="Enter Name" {...register("name")} />
