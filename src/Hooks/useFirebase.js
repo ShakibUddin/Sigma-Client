@@ -34,6 +34,7 @@ const useFirebase = () => {
                 setSigninError(error.code);
             });
 
+
     }, [getUserRoleUrl, user?.email])
 
     const handleGoogleSignIn = () => {
@@ -79,7 +80,7 @@ const useFirebase = () => {
     }
 
     const handleFirebaseEmailSignIn = (email, password) => {
-        //setIsLoading(true);
+        setIsLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 

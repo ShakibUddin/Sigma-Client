@@ -81,14 +81,15 @@ const Dashboard = () => {
                 <div style={{ zIndex: "1", minHeight: height }} className={`w-full ${collapse ? "pl-14" : "lg:pl-56"} pl-14`}>
                     <Switch>
                         {
-                            role === "USER" ?
-                                <PrivateRoute exact path={`${path}/:sectionId`}>
-                                    <DashboardSection />
-                                </PrivateRoute>
-                                :
-                                <AdminRoute eaxct path={`${path}/:sectionId`}>
-                                    <DashboardSection />
-                                </AdminRoute>
+                            role === "USER" &&
+                            <PrivateRoute exact path={`${path}/:sectionId`}>
+                                <DashboardSection />
+                            </PrivateRoute>
+                        }{
+                            role === "ADMIN" &&
+                            <AdminRoute exact path={`${path}/:sectionId`}>
+                                <DashboardSection />
+                            </AdminRoute>
                         }
 
                     </Switch>

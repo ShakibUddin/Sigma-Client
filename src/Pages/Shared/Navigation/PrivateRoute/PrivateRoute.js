@@ -4,7 +4,8 @@ import { Redirect, Route } from 'react-router';
 import useAuth from '../../../../Hooks/useAuth';
 
 const PrivateRoute = ({ children, ...rest }) => {
-    const { user, isLoading } = useAuth();
+    const { user, role, isLoading } = useAuth();
+
     if (isLoading) return (<div className='w-full flex justify-center items-center h-96'>
 
         <Loader
@@ -20,7 +21,7 @@ const PrivateRoute = ({ children, ...rest }) => {
         <Route
             {...rest}
             render={({ location }) =>
-                user.email ? (
+                user.email && role !== "ADMIN" ? (
                     children
                 ) : (
                     <Redirect

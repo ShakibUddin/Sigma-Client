@@ -24,7 +24,7 @@ const Navigation = () => {
                         <Route exact path="/"><Home></Home></Route>
                         <Route exact path="/home"><Home></Home></Route>
                         <Route exact path="/products"><Products></Products></Route>
-                        <PrivateRoute path="/dashboard"><Dashboard></Dashboard></PrivateRoute>
+                        <Route path="/dashboard"><Dashboard></Dashboard></Route>
                         <PrivateRoute exact path="/purchase/:productId"><Purchase></Purchase></PrivateRoute>
                         <Route exact path="/signin"><SignIn></SignIn></Route>
                         <Route exact path="/signup"><SignUp></SignUp></Route>

@@ -19,8 +19,7 @@ const SignIn = () => {
         handleFirebaseEmailSignIn,
         isLoading,
         signinError,
-        role,
-        user
+        role
     } = useAuth();
     const { updateLocationState } = useData();
     const location = useLocation();
