@@ -43,7 +43,7 @@ const ProductCard = (props) => {
                     {showPurchaseButton && <Link className="w-3/5 py-2 px-4 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-lg" to={`/purchase/${_id}`}>
                         <button className=" w-full  text-white">BUY</button>
                     </Link>}
-                    {showDeleteButton && <button className="w-3/5 py-2 px-4 bg-gradient-to-t from-red-600 to-red-500 rounded-lg shadow-lg text-white" onClick={() => openModal()}>DELETE</button>}
+                    {showDeleteButton && <button className="w-3/5 mx-auto py-2 px-4 bg-gradient-to-t from-red-600 to-red-500 rounded-lg shadow-lg text-white" onClick={() => openModal()}>DELETE</button>}
                 </div>
             </div>
         </div>

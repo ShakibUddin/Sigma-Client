@@ -17,7 +17,7 @@ const useFirebase = () => {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const upsertUserUrl = `${serverUrl}/user`;
-    const getUserRoleUrl = `${serverUrl}/user/role`;//add email 
+    const getUserRoleUrl = `${serverUrl}/user`;//add email 
 
     const saveUserInDB = (user) => {
         axios.put(upsertUserUrl, { ...user });
@@ -53,6 +53,7 @@ const useFirebase = () => {
             })
             .finally(() => setIsLoading(false));
     }
+
     const handleGithubSignIn = () => {
         return signInWithPopup(auth, gitHubProvider)
             .then(result => {
