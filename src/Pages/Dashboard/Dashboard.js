@@ -1,4 +1,4 @@
-import { faBars, faCreditCard, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCreditCard, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faTimesCircle, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
@@ -47,25 +47,27 @@ const Dashboard = () => {
             {/* drawer and menu items div */}
             <div className="w-full flex select-none relative">
                 {/* drawer */}
-                <div style={{ minWidth: `${collapse ? "50px" : "220px"}`, zIndex: "2" }} className="h-full grid grid-cols-1 place-content-start bg-gradient-to-t from-blue-600 to-blue-500 rounded-r-3xl shadow-lg p-3 absolute" >
-                    <FontAwesomeIcon className="text-white font-bold text-xl cursor-pointer ml-2" icon={faBars} onClick={handleSideBarToggle} />
+                <div style={{ minWidth: `${collapse ? "54px" : "224px"}`, zIndex: "2" }} className="h-full grid grid-cols-1 place-content-start bg-gradient-to-r from-blue-600 to-blue-500 rounded-r-3xl shadow-lg p-3 absolute" >
                     {
-                        !collapse && <div>
+                        collapse ? <FontAwesomeIcon className="text-white font-bold text-xl cursor-pointer ml-2 mr-auto transition duration-500 transform hover:scale-125" icon={faBars} onClick={handleSideBarToggle} /> : <FontAwesomeIcon className="text-white font-bold text-xl cursor-pointer ml-auto transition duration-500 transform hover:scale-125" icon={faTimesCircle} onClick={handleSideBarToggle} />
+                    }
+                    {
+                        !collapse && <div className="w-full">
                             {
                                 menus.map((menu, index) => {
                                     if (index === menus.length - 1) {
-                                        return <Link key={index} className="my-2 p-2 text-base select-none text-white" to="/home"><button onClick={() => {
+                                        return <Link key={index} to="/home"><p className="w-full my-2 p-2 rounded-md text-base bg-gradient-to-t from-red-600 to-red-500 shadow-md text-white select-none" onClick={() => {
                                             logout();
-                                        }} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</button></Link>;
+                                        }} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</p></Link>;
                                     }
                                     return <Link key={index} to={`${url}/${menu.path}`}>
                                         <p
                                             onClick={(e) => { handleMenuClick(e) }}
                                             className={
                                                 `${menu.name.trim() === selectedMenu.trim() ?
-                                                    "bg-white my-2 p-2 rounded-md text-base text-blue-500 select-none"
+                                                    "w-full bg-white my-2 p-2 rounded-md text-base text-blue-500 select-none"
                                                     :
-                                                    "my-2 p-2 text-base rounded-md select-none text-white"
+                                                    "w-full my-2 p-2 text-base rounded-md select-none text-white "
                                                 }`
                                             }>
                                             <FontAwesomeIcon icon={menu.icon} /> {menu.name}
