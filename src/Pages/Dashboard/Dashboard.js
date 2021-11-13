@@ -5,6 +5,7 @@ import { useRouteMatch } from 'react-router';
 import { Link, Switch } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
+import NotFound from '../NotFound/NotFound';
 import AdminRoute from '../Shared/Navigation/AdminRoute/AdminRoute';
 import PrivateRoute from '../Shared/Navigation/PrivateRoute/PrivateRoute';
 import DashboardSection from './DashboardSection/DashboardSection';
@@ -42,6 +43,7 @@ const Dashboard = () => {
     const handleMenuClick = (e) => {
         setSelectedMenu(e.target.innerText);
     }
+    if (role === "Unauthorized") return (<NotFound></NotFound>)
     return (
         <div className="w-full">
             {/* drawer and menu items div */}
