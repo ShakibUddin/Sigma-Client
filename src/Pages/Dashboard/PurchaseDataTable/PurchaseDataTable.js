@@ -5,9 +5,11 @@ import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const PurchaseDataTable = () => {
-    const { purchases, fetchPurchases, deletePurchase } = useData();
+    const { purchases, fetchPurchases, deletePurchase, dataLoading } = useData();
     const [myPurchases, setMyPurchases] = useState([]);
     const { user, token } = useAuth();
+
+
     useEffect(() => {
         fetchPurchases(token);
     }, [token]);
@@ -32,8 +34,7 @@ const PurchaseDataTable = () => {
         })
     }
 
-    if (purchases?.length === 0) return (<div className='w-full flex justify-center items-center h-96'>
-
+    if (dataLoading) return (<div className='w-full flex justify-center items-center h-96'>
         <Loader
             type="ThreeDots"
             color="#3386FF"
@@ -41,9 +42,9 @@ const PurchaseDataTable = () => {
             width={100}
             timeout={4000}
         />
-
     </div>);
-    if (myPurchases.length === 0) return (
+
+    if (!dataLoading && myPurchases.length === 0) return (
         <div className="w-full text-3xl text-blue-500 text-center h-96 flex justify-center items-center">
             <p>You don't have any purchases at this moment</p>
         </div>

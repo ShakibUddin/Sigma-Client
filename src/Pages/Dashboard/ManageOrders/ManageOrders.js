@@ -5,7 +5,7 @@ import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
 
 const ManageOrders = () => {
-    const { purchases, fetchPurchases, approvePurchase, deletePurchase } = useData();
+    const { dataLoading, purchases, fetchPurchases, approvePurchase, deletePurchase } = useData();
     const { token } = useAuth();
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const ManageOrders = () => {
     }
 
 
-    if (purchases.length === 0) return (<div className='w-full flex justify-center items-center h-96'>
+    if (dataLoading) return (<div className='w-full flex justify-center items-center h-96'>
         <>
             <Loader
                 type="ThreeDots"
@@ -59,6 +59,11 @@ const ManageOrders = () => {
         </>
     </div>);
 
+    if (!dataLoading && purchases.length === 0) return (
+        <div className="w-full text-3xl text-blue-500 text-center h-96 flex justify-center items-center">
+            <p>There are no orders at this moment</p>
+        </div>
+    )
     return (
         <div className="bg-white mb-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-2">
             {

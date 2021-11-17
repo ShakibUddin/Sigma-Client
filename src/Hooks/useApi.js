@@ -11,7 +11,7 @@ let useApi = () => {
     const [purchaseSaved, setPurchaseSaved] = useState(false);
     const [reviewSaved, setReviewSaved] = useState(false);
     const [locationState, setLocationState] = useState();
-
+    const [dataLoading, setDataLoading] = useState(false);
 
     const getProductsUrl = `${serverUrl}/products`;
     const saveProductsUrl = `${serverUrl}/product/add`;
@@ -142,12 +142,14 @@ let useApi = () => {
 
     //----------------------Purchases Get,Post Code------------------
     const fetchPurchases = (token) => {
+        setDataLoading(true);
         axios.defaults.headers.common['authorization'] =
             'Bearer ' + token;
         axios.get(getPurchasesUrl)
             .then(response => {
                 setPurchases(response.data);
-            }).catch(e => console.log(e));
+            }).catch(e => console.log(e))
+            .finally(() => setDataLoading(false));
     }
 
     const savePurchase = ({ user, email, mobile, address, productId, product, date, price, status }, token) => {
@@ -276,7 +278,7 @@ let useApi = () => {
     }
 
 
-    return { fetchProducts, products, saveProduct, deleteProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase, makeAdmin, updateLocationState, locationState };
+    return { dataLoading, fetchProducts, products, saveProduct, deleteProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase, makeAdmin, updateLocationState, locationState };
 }
 
 export default useApi;
