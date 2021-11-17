@@ -9,7 +9,7 @@ const PrivateRoute = ({ children, ...rest }) => {
     if (isLoading) return (<div className='w-full flex justify-center items-center h-96'>
 
         <Loader
-            type="Bars"
+            type="ThreeDots"
             color="#3386FF"
             height={100}
             width={100}

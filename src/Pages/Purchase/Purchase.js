@@ -43,7 +43,7 @@ const SignUp = () => {
             history.push(redirect_uri);
             setPurchaseSaved(false);
         }
-    }, [history, purchaseSaved, setPurchaseSaved]);
+    }, [history, purchaseSaved]);
 
     useEffect(() => {
         //finding user selected product from products
@@ -53,7 +53,7 @@ const SignUp = () => {
     if (!selectedProduct) return (<div className='w-full flex justify-center items-center h-96'>
 
         <Loader
-            type="Bars"
+            type="ThreeDots"
             color="#3386FF"
             height={100}
             width={100}

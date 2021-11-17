@@ -55,7 +55,7 @@ const SignUp = () => {
         if (reviewSaved) {
             setReviewSaved(false);
         }
-    }, [history, reviewSaved, setReviewSaved]);
+    }, [history, reviewSaved]);
 
     const handleRatingChange = (value) => setRating(value);
 

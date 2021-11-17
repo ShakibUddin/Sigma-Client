@@ -10,7 +10,7 @@ const PurchaseDataTable = () => {
     const { user, token } = useAuth();
     useEffect(() => {
         fetchPurchases(token);
-    }, [fetchPurchases, token]);
+    }, [token]);
 
     useEffect(() => {
         setMyPurchases(purchases.filter(purchase => purchase.email.toString() === user?.email.toString()));
@@ -35,7 +35,7 @@ const PurchaseDataTable = () => {
     if (purchases?.length === 0) return (<div className='w-full flex justify-center items-center h-96'>
 
         <Loader
-            type="Bars"
+            type="ThreeDots"
             color="#3386FF"
             height={100}
             width={100}
@@ -43,6 +43,11 @@ const PurchaseDataTable = () => {
         />
 
     </div>);
+    if (myPurchases.length === 0) return (
+        <div className="w-full text-3xl text-blue-500 text-center h-96 flex justify-center items-center">
+            <p>You don't have any purchases at this moment</p>
+        </div>
+    );
     return (
         <div className="bg-white mb-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-2">
             {

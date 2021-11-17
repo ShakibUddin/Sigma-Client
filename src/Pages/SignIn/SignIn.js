@@ -1,5 +1,5 @@
 
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faUserAlt, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect } from 'react';
@@ -83,17 +83,27 @@ const SignIn = () => {
 
             <p className="p-3">or</p>
 
-            <div className="lg:w-2/4 md:w-3/4 w-full flex justify-around">
+            <div className="lg:w-2/4 md:w-3/4 w-full flex flex-wrap justify-around">
 
-                <button className="px-4 p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md" onClick={(e) => {
+                <button style={{ minWidth: "120px" }} className="p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md m-2" onClick={(e) => {
                     e.preventDefault();
                     handleGoogleSignIn()
                 }}><img className="lg:w-7 lg:h-7 md:w-6 md:h-6 w-4 h-4 inline" src={google} alt="" /> Google</button>
 
-                <button className="px-4 p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md" onClick={(e) => {
+                <button style={{ minWidth: "120px" }} className="p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md m-2" onClick={(e) => {
                     e.preventDefault();
                     handleGithubSignIn()
                 }}> <img className="lg:w-7 lg:h-7 md:w-6 md:h-6 w-4 h-4 inline" src={github} alt="" /> Github</button>
+
+                <button style={{ minWidth: "120px" }} className="p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md m-2" onClick={(e) => {
+                    e.preventDefault();
+                    handleFirebaseEmailSignIn("admin9798@gmail.com", "97633679");
+                }}><FontAwesomeIcon className="mr-2" icon={faUserShield} /> Admin</button>
+
+                <button style={{ minWidth: "120px" }} className="p-2 lg:text-xl md:text-xl text-base border-2 text-black bg-white shadow-md rounded-md m-2" onClick={(e) => {
+                    e.preventDefault();
+                    handleFirebaseEmailSignIn("jhondoe@gmail.com", "jhonsnow9779");
+                }}> <FontAwesomeIcon className="mr-2" icon={faUserAlt} /> User</button>
             </div>
         </form>
     );

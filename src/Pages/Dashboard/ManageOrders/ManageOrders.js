@@ -10,7 +10,7 @@ const ManageOrders = () => {
 
     useEffect(() => {
         fetchPurchases(token);
-    }, [fetchPurchases, token])
+    }, [])
 
     const handleApproveClick = (purchase) => {
         Swal.fire({
@@ -46,19 +46,26 @@ const ManageOrders = () => {
         })
     }
 
-    if (purchases?.length === 0) return (<div className='w-full flex justify-center items-center h-96'>
 
-        <Loader
-            type="Bars"
-            color="#3386FF"
-            height={100}
-            width={100}
-            timeout={4000}
-        />
-
+    if (purchases.length === 0) return (<div className='w-full flex justify-center items-center h-96'>
+        <>
+            <Loader
+                type="ThreeDots"
+                color="#3386FF"
+                height={100}
+                width={100}
+                timeout={4000}
+            />
+        </>
     </div>);
+
     return (
         <div className="bg-white mb-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-2">
+            {
+                purchases.length === 0 && <div className="w-full text-3xl text-blue-500 text-center h-96 flex justify-center items-center">
+                    <p>There are no orders at this moment</p>
+                </div>
+            }
             {
                 purchases.map(purchase => <div key={purchase._id} className="w-full flex flex-col justify-between p-2 shadow-md">
                     <div>

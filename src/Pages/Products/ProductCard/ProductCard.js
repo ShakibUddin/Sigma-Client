@@ -14,16 +14,16 @@ const ProductCard = (props) => {
 
     function openModal() {
         Swal.fire({
-            title: 'Are you sure?',
-            text: `Are you sure you want to delete ${name}? You won't be able to revert this!`,
+            title: 'Warning',
+            text: `Delete is disabled for security purpose.`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Ok'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteProduct(_id, token);
+                //deleteProduct(_id, token);
             }
         })
     }

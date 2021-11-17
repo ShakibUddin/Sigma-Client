@@ -1,11 +1,11 @@
 import { faBars, faCreditCard, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faTimesCircle, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import Loader from 'react-loader-spinner';
 import { useRouteMatch } from 'react-router';
 import { Link, Switch } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
-import NotFound from '../NotFound/NotFound';
 import AdminRoute from '../Shared/Navigation/AdminRoute/AdminRoute';
 import PrivateRoute from '../Shared/Navigation/PrivateRoute/PrivateRoute';
 import DashboardSection from './DashboardSection/DashboardSection';
@@ -18,7 +18,7 @@ const Dashboard = () => {
     const adminMenus = [{ name: "Manage Orders", path: "manage_orders", icon: faShoppingCart }, { name: "Manage Products", path: "manage_products", icon: faTasks }, { name: "Add A Product", path: "add_product", icon: faPlusSquare }, { name: "Make Admin", path: "make_admin", icon: faUserShield }, { name: "Logout", icon: faSignOutAlt }];
 
     const [menus, setMenus] = useState([]);
-    const { logout, role } = useAuth();
+    const { logout, role, user } = useAuth();
     const { width, height } = useWindowDimensions();
     let { path, url } = useRouteMatch();
 
@@ -43,9 +43,22 @@ const Dashboard = () => {
     const handleMenuClick = (e) => {
         setSelectedMenu(e.target.innerText);
     }
-    if (role === "Unauthorized") return (<NotFound></NotFound>)
+    if (role === "Unauthorized") return (
+        <div className='w-full h-64 flex justify-center items-center'>
+
+            <Loader
+                type="TailSpin"
+                color="#3386FF"
+                height={50}
+                width={50}
+                timeout={4000}
+            />
+
+        </div>
+    );
     return (
-        <div className="w-full">
+        //if user clicks nav items set selected menu to empty string
+        <div className="w-full" onBlur={() => { setSelectedMenu("") }}>
             {/* drawer and menu items div */}
             <div className="w-full flex select-none relative">
                 {/* drawer */}
@@ -58,7 +71,7 @@ const Dashboard = () => {
                             {
                                 menus.map((menu, index) => {
                                     if (index === menus.length - 1) {
-                                        return <Link key={index} to="/home"><p className="w-full my-2 p-2 rounded-md text-base bg-gradient-to-t from-red-600 to-red-500 shadow-md text-white select-none" onClick={() => {
+                                        return <Link key={index} to="/home"><p className="w-full my-2 p-2 rounded-md text-base border-2 border-red bg-white bg-gradient-to-t hover:from-red-600 hover:to-red-500 shadow-md text-white select-none" onClick={() => {
                                             logout();
                                         }} ><FontAwesomeIcon icon={menu.icon} /> {menu.name}</p></Link>;
                                     }
@@ -83,6 +96,9 @@ const Dashboard = () => {
 
                 {/* menu items */}
                 <div style={{ zIndex: "1", minHeight: height }} className={`w-full ${collapse ? "pl-14" : "lg:pl-56"} pl-14`}>
+                    {window.location.pathname === "/dashboard" && <div className="w-full text-3xl text-blue-500 text-center h-96 flex justify-center items-center">
+                        <p>Welcome, {user.name}</p>
+                    </div>}
                     <Switch>
                         {
                             role === "USER" &&
