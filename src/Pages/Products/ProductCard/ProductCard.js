@@ -40,6 +40,7 @@ const ProductCard = (props) => {
                 </div>
                 <div className="w-full flex  items-center">
                     {showPurchaseButton && <p style={{ fontFamily: "'Bebas Neue', cursive" }} className="text-6xl pr-16 text-green-500 font-bold my-2">${price}</p>}
+
                     {showPurchaseButton && <Link className="w-3/5 py-2 px-4 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-lg" to={`/purchase/${_id}`}>
                         <button className=" w-full  text-white">BUY</button>
                     </Link>}

@@ -91,10 +91,10 @@ const ManageOrders = () => {
                         <p className="text-left text-blue-500 font-bold text-sm  py-3 break-words">Date: <span className="text-gray-600 text-xs text-left py-3 ">{purchase.date}</span></p>
                     </div>
                     <div className="flex justify-center">
-                        <button className="w-2/4 mx-1 p-2 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md text-white" onClick={() => {
+                        {purchase.status === "Pending" && <button className="w-2/4 mx-1 p-2 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg shadow-md text-white" onClick={() => {
                             handleApproveClick(purchase);
                         }}
-                        >Approve</button>
+                        >Approve</button>}
                         <button className="w-2/4 mx-1 p-2 bg-gradient-to-t from-red-600 to-red-500 rounded-lg shadow-md text-white" onClick={() => {
                             openModal(purchase);
                         }}>

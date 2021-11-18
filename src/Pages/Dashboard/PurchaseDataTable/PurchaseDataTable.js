@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loader-spinner';
+import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAuth from '../../../Hooks/useAuth';
 import useData from '../../../Hooks/useData';
@@ -8,7 +9,7 @@ const PurchaseDataTable = () => {
     const { purchases, fetchPurchases, deletePurchase, dataLoading } = useData();
     const [myPurchases, setMyPurchases] = useState([]);
     const { user, token } = useAuth();
-
+    const history = useHistory();
 
     useEffect(() => {
         fetchPurchases(token);
@@ -32,6 +33,11 @@ const PurchaseDataTable = () => {
                 deletePurchase(purchase._id, token);
             }
         })
+    }
+
+    const redirectToPaymentPage = (id) => {
+        //axios.post('/create-checkout-session');
+        history.push(`/dashboard/payment/${id}`);
     }
 
     if (dataLoading) return (<div className='w-full flex justify-center items-center h-96'>
@@ -76,6 +82,7 @@ const PurchaseDataTable = () => {
                         }}>
                             Delete
                         </button>
+                        {purchase.status === "Shipped" && <button className="w-3/5 mx-auto py-2 px-4 bg-gradient-to-t from-yellow-600 to-yellow-500 rounded-lg shadow-lg text-white" onClick={() => { redirectToPaymentPage(purchase.productId) }}>Checkout</button>}
                     </div>
                 </div>)
             }

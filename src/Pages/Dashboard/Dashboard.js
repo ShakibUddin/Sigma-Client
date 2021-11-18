@@ -1,4 +1,4 @@
-import { faBars, faCreditCard, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faTimesCircle, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faEdit, faPlusSquare, faShoppingCart, faSignOutAlt, faTasks, faTimesCircle, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loader-spinner';
@@ -8,12 +8,18 @@ import useAuth from '../../Hooks/useAuth';
 import useWindowDimensions from '../../Hooks/useWindowDimensions';
 import AdminRoute from '../Shared/Navigation/AdminRoute/AdminRoute';
 import PrivateRoute from '../Shared/Navigation/PrivateRoute/PrivateRoute';
-import DashboardSection from './DashboardSection/DashboardSection';
+import AddProduct from './AddProduct/AddProduct';
+import MakeAdmin from './MakeAdmin/MakeAdmin';
+import ManageOrders from './ManageOrders/ManageOrders';
+import ManageProducts from './ManageProducts/ManageProducts';
+import Payment from './Payment/Payment';
+import PurchaseDataTable from './PurchaseDataTable/PurchaseDataTable';
+import ReviewForm from './ReviewForm/ReviewForm';
 
 const Dashboard = () => {
     const [collapse, setCollapse] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState("");
-    const userMenus = [{ name: "Pay", path: "pay", icon: faCreditCard }, { name: "Orders", path: "orders", icon: faShoppingCart }, { name: "Review", path: "review", icon: faEdit }, { name: "Logout", icon: faSignOutAlt }];
+    const userMenus = [{ name: "Orders", path: "orders", icon: faShoppingCart }, { name: "Review", path: "review", icon: faEdit }, { name: "Logout", icon: faSignOutAlt }];
 
     const adminMenus = [{ name: "Manage Orders", path: "manage_orders", icon: faShoppingCart }, { name: "Manage Products", path: "manage_products", icon: faTasks }, { name: "Add A Product", path: "add_product", icon: faPlusSquare }, { name: "Make Admin", path: "make_admin", icon: faUserShield }, { name: "Logout", icon: faSignOutAlt }];
 
@@ -99,20 +105,38 @@ const Dashboard = () => {
                     {window.location.pathname === "/dashboard" && <div className="w-full text-3xl text-blue-500 text-center h-96 flex justify-center items-center">
                         <p>Welcome, {user.name}</p>
                     </div>}
-                    <Switch>
-                        {
-                            role === "USER" &&
-                            <PrivateRoute exact path={`${path}/:sectionId`}>
-                                <DashboardSection />
-                            </PrivateRoute>
-                        }{
-                            role === "ADMIN" &&
-                            <AdminRoute exact path={`${path}/:sectionId`}>
-                                <DashboardSection />
+                    {
+                        role === "ADMIN" &&
+                        <Switch>
+                            <AdminRoute exact path={`${path}/manage_orders`}>
+                                <ManageOrders />
                             </AdminRoute>
-                        }
+                            <AdminRoute exact path={`${path}/manage_products`}>
+                                <ManageProducts />
+                            </AdminRoute>
+                            <AdminRoute exact path={`${path}/add_product`}>
+                                <AddProduct />
+                            </AdminRoute>
+                            <AdminRoute exact path={`${path}/make_admin`}>
+                                <MakeAdmin />
+                            </AdminRoute>
+                        </Switch>
+                    }
+                    {
+                        role === "USER" &&
+                        <Switch>
+                            <PrivateRoute exact path={`${path}/orders`}>
+                                <PurchaseDataTable />
+                            </PrivateRoute>
+                            <PrivateRoute exact path={`${path}/review`}>
+                                <ReviewForm />
+                            </PrivateRoute>
+                            <PrivateRoute exact path={`${path}/payment/:productId`}>
+                                <Payment />
+                            </PrivateRoute>
+                        </Switch>
+                    }
 
-                    </Switch>
                 </div>
             </div>
         </div >
