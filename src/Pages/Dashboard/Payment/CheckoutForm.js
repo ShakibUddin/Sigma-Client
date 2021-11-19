@@ -1,11 +1,21 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { serverUrl } from '../../../Constants/Constants';
 
 const CheckoutForm = (props) => {
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState('');
     const product = props.product;
+    const [clientSecret, setClientSecret] = useState('');
+
+    useEffect(() => {
+        console.log("getting intent")
+        axios.post(`${serverUrl}/create-payment-intent`, { price: product.price })
+            .then(data => console.log(data));
+    }, [product.price]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!stripe || !elements) {

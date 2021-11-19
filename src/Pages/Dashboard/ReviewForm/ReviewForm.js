@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 import StarRatings from 'react-star-ratings';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
@@ -12,11 +12,10 @@ const SignUp = () => {
     const [rating, setRating] = useState(0);
 
     const {
-        saveReview, reviewSaved, setReviewSaved
+        saveReview
     } = useData();
     const { user, token } = useAuth();
     const history = useHistory();
-    const redirect_uri = '/home';
 
     const validationSchema = Yup.object().shape({
         name: Yup.string(),
@@ -40,22 +39,16 @@ const SignUp = () => {
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token);
+                    saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token, history);
                 }
             })
         }
         else {
-            saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token);
+            saveReview({ user: user.name, rating: rating.toString(), description: data.description }, token, history);
         }
 
     };
 
-    useEffect(() => {
-        //if purchase is saved redirect user back to home 
-        if (reviewSaved) {
-            setReviewSaved(false);
-        }
-    }, [history, reviewSaved]);
 
     const handleRatingChange = (value) => setRating(value);
 

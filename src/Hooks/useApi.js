@@ -8,8 +8,6 @@ let useApi = () => {
     const [products, setProducts] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [purchases, setPurchases] = useState([]);
-    const [purchaseSaved, setPurchaseSaved] = useState(false);
-    const [reviewSaved, setReviewSaved] = useState(false);
     const [locationState, setLocationState] = useState();
     const [dataLoading, setDataLoading] = useState(false);
 
@@ -28,199 +26,98 @@ let useApi = () => {
         setLocationState(state);
     }
 
+    //using facade design pattern to create simpler interface for different api calls
+    const getApi = ({ url, setState, token }) => {
+        setDataLoading(true);
+        if (token) axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
+        axios.get(url)
+            .then(response => {
+                setState(response.data);
+            }).catch(e => console.log(e))
+            .finally(() => setDataLoading(false));
+    }
+    const postApi = ({ url, body, callbackOnSuccess, successMessage, history, token, redirectTo }) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
+        axios.post(url, body)
+            .then(response => {
+                if (response.data) {
+                    callbackOnSuccess();
+                    //if user passes a redirect url redirect to that page
+                    redirectTo && history.replace(redirectTo);
+                    Swal.fire({
+                        icon: 'success',
+                        title: successMessage,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                    throw new Error(response.statusText);
+                }
+
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            })
+    }
+    const deleteApi = ({ url, id, callbackOnSuccess, successMessage, token }) => {
+        axios.defaults.headers.common['authorization'] =
+            'Bearer ' + token;
+        axios.delete(`${url}/${id}`)
+            .then(function (response) {
+                if (response.data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: successMessage,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    })
+                    //fetch new data
+                    callbackOnSuccess();
+                }
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            });
+    }
     //----------------------Products Get,Post,Delete Code------------------
     const fetchProducts = () => {
-        axios.get(getProductsUrl)
-            .then(response => {
-                setProducts(response.data);
-            }).catch(e => console.log(e));
+        getApi({ url: getProductsUrl, setState: setProducts });
     }
     useEffect(() => {
         fetchProducts();
     }, []);
     const saveProduct = (productData, token) => {
-        axios.defaults.headers.common['authorization'] =
-            'Bearer ' + token;
-        axios.post(saveProductsUrl, productData)
-            .then(response => {
-                if (response.data) {
-                    fetchProducts();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Product Uploaded Successfully',
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                    })
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                    })
-                    throw new Error(response.statusText);
-                }
-
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                })
-            })
+        postApi({ url: saveProductsUrl, body: productData, callbackOnSuccess: fetchProducts, successMessage: 'Product Uploaded Successfully', token });
     }
     const deleteProduct = (id, token) => {
+        deleteApi({ url: deleteProductUrl, id, callbackOnSuccess: fetchProducts, successMessage: 'Product deleted successfully.', token });
+    }
+    const updateApi = ({ url, id, callbackOnSuccess, successMessage, token }) => {
         axios.defaults.headers.common['authorization'] =
             'Bearer ' + token;
-        axios.delete(`${deleteProductUrl}/${id}`)
-            .then(function (response) {
-                if (response.data) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Product deleted successfully.',
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                    })
-                    //fetch new data
-                    fetchProducts();
-                }
-            })
-            .catch(function (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                })
-            });
-    }
-
-    //----------------------Reviews Get,Post Code------------------
-    const fetchReviews = () => {
-        axios.get(getReviewsUrl)
-            .then(response => {
-                setReviews(response.data);
-            }).catch(e => console.log(e));
-    }
-
-    const saveReview = ({ user, rating, description }, token) => {
-        axios.defaults.headers.common['authorization'] =
-            'Bearer ' + token;
-        axios.post(saveReviewUrl, { user, rating, description })
+        axios.put(`${url}/${id}`)
             .then(response => {
                 if (response.data) {
-                    setReviewSaved(true);
-                    fetchReviews();
+                    callbackOnSuccess(token);
                     Swal.fire({
                         icon: 'success',
-                        title: 'Thank You.',
-                        text: "We appreciate your feedback",
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                    })
-                }
-                else {
-                    setReviewSaved(false);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                    })
-                    throw new Error(response.statusText);
-                }
-
-            })
-            .catch(error => {
-                setReviewSaved(false);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                })
-            })
-    }
-
-    //----------------------Purchases Get,Post Code------------------
-    const fetchPurchases = (token) => {
-        setDataLoading(true);
-        axios.defaults.headers.common['authorization'] =
-            'Bearer ' + token;
-        axios.get(getPurchasesUrl)
-            .then(response => {
-                setPurchases(response.data);
-            }).catch(e => console.log(e))
-            .finally(() => setDataLoading(false));
-    }
-
-    const savePurchase = ({ user, email, mobile, address, productId, product, date, price, status }, token) => {
-        axios.defaults.headers.common['authorization'] =
-            'Bearer ' + token;
-        axios.post(savePurchaseUrl, { user, email, mobile, address, productId, product, date, price, status })
-            .then(response => {
-                if (response.data) {
-                    setPurchaseSaved(true);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Thank You.',
-                        text: "We received your order",
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                    })
-                }
-                else {
-                    setPurchaseSaved(false);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                    })
-                    throw new Error(response.statusText);
-                }
-
-            })
-            .catch(error => {
-                setPurchaseSaved(false);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                })
-            })
-    }
-    const deletePurchase = (id, token) => {
-        axios.defaults.headers.common['authorization'] =
-            'Bearer ' + token;
-        axios.delete(`${deletePurchaseUrl}/${id}`)
-            .then(function (response) {
-                if (response.data) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Order deleted successfully.',
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                    })
-                    //fetch new data
-                    fetchPurchases(token);
-                }
-            })
-            .catch(function (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                })
-            });
-    }
-    const approvePurchase = (_id, token) => {
-        axios.defaults.headers.common['authorization'] =
-            'Bearer ' + token;
-        axios.put(`${approvePurchaseUrl}/${_id}`)
-            .then(response => {
-                if (response.data) {
-                    fetchPurchases(token);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Order shipped successfully',
+                        title: successMessage,
                         showCloseButton: true,
                         showConfirmButton: false,
                     })
@@ -243,9 +140,33 @@ let useApi = () => {
                 });
             })
     }
+    //----------------------Reviews Get,Post Code------------------
+    const fetchReviews = () => {
+        getApi({ url: getReviewsUrl, setState: setReviews });
+    }
+
+    const saveReview = ({ user, rating, description }, token, history) => {
+        postApi({ url: saveReviewUrl, body: { user, rating, description }, callbackOnSuccess: fetchReviews, successMessage: 'We appreciate your feedback', token, history, redirectTo: '/home' });
+    }
+
+    //----------------------Purchases Get,Post Code------------------
+    const fetchPurchases = (token) => {
+        getApi({ url: getPurchasesUrl, setState: setPurchases, token });
+    }
+
+    const savePurchase = ({ user, email, mobile, address, productId, product, date, price, status }, token, history) => {
+        postApi({ url: savePurchaseUrl, body: { user, email, mobile, address, productId, product, date, price, status }, callbackOnSuccess: fetchPurchases, successMessage: 'We received your order', token, history, redirectTo: '/home' });
+    }
+    const deletePurchase = (id, token) => {
+        deleteApi({ url: deletePurchaseUrl, id, callbackOnSuccess: fetchPurchases, successMessage: 'Order deleted successfully.', token });
+    }
+    const approvePurchase = (id, token) => {
+        updateApi({ url: approvePurchaseUrl, id, callbackOnSuccess: fetchPurchases, successMessage: 'Order shipped successfully', token })
+    }
 
     //----------------------Make Admin Code------------------
     const makeAdmin = (email, token) => {
+        updateApi({ url: makeAdminUrl, callbackOnSuccess: fetchPurchases, successMessage: 'Order shipped successfully', token })
         axios.defaults.headers.common['authorization'] =
             'Bearer ' + token;
         axios.put(`${makeAdminUrl}/${email}`)
@@ -278,7 +199,7 @@ let useApi = () => {
     }
 
 
-    return { dataLoading, fetchProducts, products, saveProduct, deleteProduct, fetchReviews, reviews, saveReview, fetchPurchases, reviewSaved, setReviewSaved, purchases, savePurchase, purchaseSaved, setPurchaseSaved, deletePurchase, approvePurchase, makeAdmin, updateLocationState, locationState };
+    return { dataLoading, fetchProducts, products, saveProduct, deleteProduct, fetchReviews, reviews, saveReview, fetchPurchases, purchases, savePurchase, deletePurchase, approvePurchase, makeAdmin, updateLocationState, locationState };
 }
 
 export default useApi;

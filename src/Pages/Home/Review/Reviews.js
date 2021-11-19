@@ -26,7 +26,7 @@ const Reviews = () => {
     return (
         <div className="lg:w-11/12 md:w-11/12 w-full mx-auto place-content-center grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-4 p-4">
             {
-                reviews.map(review => <ReviewCard key={review._id} data={review}></ReviewCard>)
+                reviews.reverse().map(review => <ReviewCard key={review._id} data={review}></ReviewCard>)
             }
         </div>
     );

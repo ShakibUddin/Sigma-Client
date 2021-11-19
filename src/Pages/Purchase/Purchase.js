@@ -2,7 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import Loader from 'react-loader-spinner';
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from 'react-router';
+import { useParams } from "react-router-dom";
 import * as Yup from 'yup';
 import useAuth from '../../Hooks/useAuth';
 import useData from '../../Hooks/useData';
@@ -13,11 +14,10 @@ const SignUp = () => {
     const { height, width } = useWindowDimensions();
     const [selectedProduct, setSelectedProduct] = useState();
     const {
-        savePurchase, purchaseSaved, setPurchaseSaved, products
+        savePurchase, products
     } = useData();
-    const { user, token } = useAuth();
     const history = useHistory();
-    const redirect_uri = '/home';
+    const { user, token } = useAuth();
 
     const validationSchema = Yup.object().shape({
         name: Yup.string(),
@@ -34,16 +34,8 @@ const SignUp = () => {
     const formOptions = { resolver: yupResolver(validationSchema) };
     const { register, handleSubmit, formState: { errors } } = useForm(formOptions);
     const onSubmit = data => {
-        savePurchase({ user: user.name, email: data.email, mobile: data.mobile, address: data.address, productId: selectedProduct._id, product: selectedProduct.name, price: selectedProduct.price, date: new Date().toDateString(), status: "Pending" }, token);
+        savePurchase({ user: user.name, email: data.email, mobile: data.mobile, address: data.address, productId: selectedProduct._id, product: selectedProduct.name, price: selectedProduct.price, date: new Date().toDateString(), status: "Pending" }, token, history);
     };
-
-    useEffect(() => {
-        //if purchase is saved redirect user back to home 
-        if (purchaseSaved) {
-            history.push(redirect_uri);
-            setPurchaseSaved(false);
-        }
-    }, [history, purchaseSaved]);
 
     useEffect(() => {
         //finding user selected product from products
@@ -91,7 +83,7 @@ const SignUp = () => {
                     <input className="w-full p-3 my-2 border-2 rounded-md" type="text" placeholder="Enter Address" {...register("address")} />
                     {errors.address && <p className="lg:w-2/4 w-3/4 text-start text-red-600 font-bold">{errors.address?.message}</p>}
 
-                    <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-white rounded-lg shadow-lg text-blue-600 cursor-pointer mt-4" type="submit" value="PURCHASE" />
+                    <input className="lg:w-2/4 w-3/4 mx-auto px-4 p-2 bg-white rounded-lg shadow-lg text-blue-600 cursor-pointer mt-4" type="submit" value="ORDER" />
                 </form>
             </div>
 
