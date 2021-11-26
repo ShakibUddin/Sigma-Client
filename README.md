@@ -1,7 +1,7 @@
 # Sigma
 
 > Full Stack wrist watch website. Created using React, Firebase, Express and MongoDB
-> Live demo [_here_](https://sigma-sakib.netlify.ap). <!-- If you have the project hosted somewhere, include the link here. -->
+> Live demo [_here_](https://sigma-sakib.netlify.app). <!-- If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
 
