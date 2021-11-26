@@ -23,24 +23,24 @@
 
 ## Technologies Used
 
-- axios: "^0.24.0",
-- firebase": "^9.4.0",
-- react: "^17.0.2",
-- react-calendar: "^3.5.0",
-- react-dom: "^17.0.2",
-- react-hook-form: "^7.17.4",
-- react-id-swiper: "^4.0.0",
-- react-loader-spinner: "^4.0.0",
-- react-loading-animation: "^1.4.0",
-- react-responsive-carousel: "^3.2.21",
-- react-router-dom: "^5.3.0",
-- react-social-icons: "^5.6.1",
-- react-star-ratings: "^2.3.0",
-- react-vertical-timeline-component: "^3.5.2",
-- sweetalert2: "^11.1.9",
-- sweetalert2-react-content: "^4.2.0",
-- swiper: "^6.8.4",
-- yup: "^0.32.11"
+- Axios: version ^0.24.0
+- Firebase: version ^9.4.0
+- React: version ^17.0.2
+- React-calendar: version ^3.5.0
+- React-dom: version ^17.0.2
+- React-hook-form: version ^7.17.4
+- React-id-swiper: version ^4.0.0
+- React-loader-spinner: version ^4.0.0
+- React-loading-animation: version ^1.4.0
+- React-responsive-carousel: version ^3.2.21
+- React-router-dom: version ^5.3.0
+- React-social-icons: version ^5.6.1
+- React-star-ratings: version ^2.3.0
+- React-vertical-timeline-component: version ^3.5.2
+- Sweetalert2: version ^11.1.9
+- Sweetalert2-react-content: version ^4.2.0
+- Swiper: version ^6.8.4
+- Yup: version ^0.32.11
 
 ## Features
 
