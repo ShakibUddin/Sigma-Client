@@ -57,8 +57,8 @@ Features Sigma includes are-
 ## Screenshots
 
 ![Example screenshot](https://i.ibb.co/m5KQf1G/1.png)
-![Example screenshot](https://i.ibb.co/JnmsZdN/2.png)
-![Example screenshot](https://i.ibb.co/f04zHVb/3.png)
+![Example screenshot](https://i.ibb.co/GTFksFM/2.png)
+![Example screenshot](https://i.ibb.co/x6CYRjt/3.png)
 ![Example screenshot](https://i.ibb.co/c18X8hN/4.png)
 ![Example screenshot](https://i.ibb.co/Y7gcVvT/5.png)
 ![Example screenshot](https://i.ibb.co/Y0mVjpK/6.png)
